@@ -1,0 +1,7 @@
+.*
+*.md
+*.test.js
+*.config.js
+*.setup.js
+coverage/
+__snapshots__/

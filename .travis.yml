@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - 'lts/*'
+  - 'node'
+
+stages:
+  - test
+
+jobs:
+  include:
+    - stage: test
+      script: npm run lint
+
+    - stage: test
+      script: npm test
+
