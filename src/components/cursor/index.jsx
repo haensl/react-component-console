@@ -1,7 +1,7 @@
 import React from 'react';
 import './cursor.css';
 
-export const DEFAULTS = {
+export const defaults = {
   classes: {
     blink: 'console-cursor--blink',
     element: 'console-cursor',
@@ -52,12 +52,12 @@ class Cursor extends React.Component {
     if (nextProps.char) {
       this.stopBlinking();
     } else if (this.state.blinkInterval === null) {
-      this.blink(nextProps.intervalMs || DEFAULTS.intervalMs);
+      this.blink(nextProps.intervalMs || defaults.intervalMs);
     }
   }
 
   componentDidMount() {
-    this.blink(this.props.intervalMs || DEFAULTS.intervalMs);
+    this.blink(this.props.intervalMs || defaults.intervalMs);
   }
 
   componentWillUnmount() {
@@ -65,7 +65,7 @@ class Cursor extends React.Component {
   }
 
   render() {
-    const classes = Object.assign({}, DEFAULTS.classes, this.props.classes);
+    const classes = Object.assign({}, defaults.classes, this.props.classes);
     let classesString = classes.element;
     if (this.props.char) {
       classesString = `${classesString} ${classes.write}`;
@@ -74,7 +74,7 @@ class Cursor extends React.Component {
     }
 
     return (
-      <span class={ classesString }>{
+      <span className={ classesString }>{
         this.props.char
       }</span>
     );
