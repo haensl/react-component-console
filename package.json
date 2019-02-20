@@ -1,6 +1,6 @@
 {
   "name": "react-component-console",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "A console emulator for React.",
   "main": "index.js",
   "scripts": {
