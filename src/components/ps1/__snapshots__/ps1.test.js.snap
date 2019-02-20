@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PS1 classes renders as expected 1`] = `
+<span
+  className="test-ps1"
+>
+  $
+</span>
+`;
+
+exports[`PS1 content renders as expected 1`] = `
+<span
+  className="console-ps1"
+>
+  ~
+</span>
+`;
+
+exports[`PS1 empty renders as expected 1`] = `
+<span
+  className="console-ps1"
+>
+  $
+</span>
+`;
