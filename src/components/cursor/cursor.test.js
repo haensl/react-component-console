@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import { mount, render } from 'enzyme';
+import { mount } from 'enzyme';
 import Cursor, { defaults } from './';
 
 jest.useFakeTimers();

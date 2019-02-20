@@ -1,16 +1,18 @@
 {
   "name": "react-component-console",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A console emulator for React.",
   "main": "index.js",
   "scripts": {
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
     "start": "styleguidist server",
-    "test": "jest --coverage --watch"
+    "test": "jest --coverage",
+    "tdd": "jest --coverage --watch"
   },
   "husky": {
     "hooks": {
-      "precommit": "npm run lint"
+      "pre-commit": "npm run lint && npm test",
+      "pre-push": "npm run lint && npm test"
     }
   },
   "jest": {
@@ -95,7 +97,6 @@
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-uglify": "^6.0.2",
     "style-loader": "^0.23.1",
-    "webpack": "^4.29.5",
-    "webpack-blocks": "^2.0.0-rc"
+    "webpack": "^4.29.5"
   }
 }
