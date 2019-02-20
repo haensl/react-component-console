@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Console empty renders as expected 1`] = `
+<div
+  className="console"
+>
+  <Line
+    classes={
+      Object {
+        "content": "console-line-content",
+        "element": "console-line",
+      }
+    }
+    content=""
+    cursor={
+      Object {
+        "classes": Object {
+          "blink": "console-cursor--blink",
+          "element": "console-cursor",
+          "write": "console-cursor--write",
+        },
+        "intervalMs": 400,
+      }
+    }
+    ps1={
+      Object {
+        "classes": Object {
+          "element": "console-ps1",
+        },
+        "content": "$",
+      }
+    }
+    write={true}
+  />
+</div>
+`;
