@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Line classes renders as expected 1`] = `
+<pre
+  className="test-line"
+>
+  <span
+    className="test-line-content"
+  />
+</pre>
+`;
+
+exports[`Line content renders as expected 1`] = `
+<pre
+  className="console-line"
+>
+  <span
+    className="console-line-content"
+  >
+    foo bar
+  </span>
+</pre>
+`;
+
+exports[`Line empty renders as expected 1`] = `
+<pre
+  className="console-line"
+>
+  <span
+    className="console-line-content"
+  />
+</pre>
+`;
+
+exports[`Line ps1 renders as expected 1`] = `
+<pre
+  className="console-line"
+>
+  <span
+    className="console-ps1"
+  >
+    ~
+  </span>
+  <span
+    className="console-line-content"
+  />
+</pre>
+`;
+
+exports[`Line write renders as expected 1`] = `
+<pre
+  className="console-line"
+>
+  <span
+    className="console-line-content"
+  />
+  <span
+    className="console-cursor console-cursor--write"
+  >
+    t
+  </span>
+</pre>
+`;
