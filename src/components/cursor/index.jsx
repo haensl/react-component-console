@@ -19,7 +19,15 @@ class Cursor extends React.Component {
     };
   }
 
+  get isBlinking() {
+    return !!this.state.blinkInteval;
+  }
+
   blink(interval) {
+    if (this.isBlinking) {
+      return this.stopBlinking(this.blink.bind(this));
+    }
+
     this.setState({
       blinkInterval: setInterval((() => {
         this.setState({
@@ -29,7 +37,7 @@ class Cursor extends React.Component {
     });
   }
 
-  stopBlinking() {
+  stopBlinking(callback) {
     if (this.state.blinkInterval) {
       clearInterval(this.state.blinkInterval);
     }
@@ -37,7 +45,7 @@ class Cursor extends React.Component {
     this.setState({
       blink: false,
       blinkInterval: null
-    });
+    }, callback);
   }
 
   componentWillReceiveProps(nextProps, nextState) {
