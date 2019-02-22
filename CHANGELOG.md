@@ -1,3 +1,6 @@
+## 0.4.0
+* [#6: Migrate Console component.](https://github.com/haensl/react-component-console/issues/6)
+
 ## 0.3.0
 * [#5: Migrate Line component.](https://github.com/haensl/react-component-console/issues/5)
 
