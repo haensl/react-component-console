@@ -21,7 +21,7 @@ class Console extends React.Component {
 
   getDelay(opts = defaults.console.typing.char) {
     const sign = math.randSign();
-    const deviation = math.random() * opts.deviation;
+    const deviation = Math.random() * opts.deviation;
     const delay = opts.avgMs
       + (opts.avgMs * deviation * sign);
     return Math.max(
@@ -57,7 +57,7 @@ class Console extends React.Component {
             window.setTimeout((() =>
               this.consumeLine(line.slice(1)).then(resolve))
                 .bind(this),
-              this.getDelay(this.state.console.typing.char)
+              this.getDelay(this.state.console.typing.char) // eslint-disable-line
             )
           ])
         });
@@ -79,32 +79,28 @@ class Console extends React.Component {
 
     const self = this;
     return this.consumeLine(line)
-    .then(() => {
-      self.setState({
-        cursor: merge(
-          self.state.cursor,
-          {
-            char: null
-          }
-        )
-      });
-    })
-    .then(() => new Promise((resolve) => {
-      self.setState({
-        timeouts: (self.state.timeouts || []).concat([
-          window.setTimeout(() => {
-            resolve();
-          }, self.getDelay(self.state.console.typing.line.delay))
-        ])
-      });
-    }));
+      .then(() => {
+        self.setState({
+          cursor: merge(
+            self.state.cursor,
+            {
+              char: null
+            }
+          )
+        });
+      })
+      .then(() => new Promise((resolve) => {
+        self.setState({
+          timeouts: (self.state.timeouts || []).concat([
+            window.setTimeout(() => {
+              resolve();
+            }, self.getDelay(self.state.console.typing.line.delay))
+          ])
+        });
+      }));
   }
 
-  async writeLines(lines) {
-    if (!(Array.isArray(lines) && lines.length)) {
-      return;
-    }
-
+  async *linesGenerator(lines) {
     for (let currentLine = 0; currentLine < lines.length; currentLine++) {
       this.setState({
         console: merge(
@@ -114,7 +110,9 @@ class Console extends React.Component {
           }
         )
       });
+
       await this.writeLine(lines[currentLine]);
+
       if (this.state.console.append) {
         this.setState({
           console: merge(
@@ -125,8 +123,18 @@ class Console extends React.Component {
           )
         });
       }
-    }
 
+      yield lines[currentLine];
+    }
+  }
+
+  async writeLines() {
+    const lines = this.state.lines || [];
+    for await (const line of this.linesGenerator(lines)) {
+      if (typeof this.props.onFinishWritingLine === 'function') {
+        this.props.onFinishWritingLine(line);
+      }
+    }
     const newState = merge({}, this.state);
     newState.console.hasFinishedWritingLines = true;
 
@@ -134,7 +142,13 @@ class Console extends React.Component {
       newState.console.text = '';
     }
 
-    this.setState(newState);
+    this.clearTimeouts();
+    const callback = this.props.onFinishWritingLines;
+    this.setState(newState, () => {
+      if (typeof callback === 'function') {
+        callback(lines);
+      }
+    });
   }
 
   get isWriting() {
@@ -147,16 +161,14 @@ class Console extends React.Component {
       const state = merge.all([defaults, this.state, props]);
       state.initialized = true;
       if (state.lines
-      && typeof state.lines === 'string') {
+        && typeof state.lines === 'string') {
         state.lines = [ state.lines ];
       }
 
-      this.setState(state);
-
-      if (state.lines
-        && state.lines.length) {
-        this.writeLines(state.lines);
-      }
+      const self = this;
+      this.setState(state, () => {
+        self.writeLines();
+      });
     }
   }
 
@@ -179,11 +191,17 @@ class Console extends React.Component {
     this.stopWriting();
   }
 
+  clearTimeouts() {
+    (this.state.timeouts || []).forEach((t) => window.clearTimeout(t));
+    this.setState({
+      timeouts: []
+    });
+  }
+
   stopWriting() {
     if (isClient && this.state.timeouts) {
-      (this.state.timeouts || []).forEach((t) => window.clearTimeout(t));
+      this.clearTimeouts();
       this.setState({
-        timeouts: [],
         console: merge(
           this.state.console,
           {
@@ -197,7 +215,7 @@ class Console extends React.Component {
 
   render() {
     if (!this.state.initialized) {
-      return;
+      return null;
     }
 
     return (

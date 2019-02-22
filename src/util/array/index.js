@@ -17,7 +17,7 @@ const equals = (a, b) => {
       return false;
     }
   }
-  
+
   return true;
 };
 

@@ -1,8 +1,8 @@
 {
   "name": "react-component-console",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A console emulator for React.",
-  "main": "index.js",
+  "main": "src/components/console/index.jsx",
   "scripts": {
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
     "start": "styleguidist server",
