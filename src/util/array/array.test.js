@@ -89,7 +89,7 @@ describe('array', () => {
               0
             )).toBeTruthy();
           });
-        })
+        });
 
         describe('enclosed', () => {
           it('returns true', () => {
