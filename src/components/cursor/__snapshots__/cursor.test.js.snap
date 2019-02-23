@@ -11,11 +11,15 @@ exports[`Cursor char renders as expected 1`] = `
 exports[`Cursor classes renders as expected 1`] = `
 <span
   className="test-element"
-/>
+>
+   
+</span>
 `;
 
 exports[`Cursor empty renders as expeted 1`] = `
 <span
   className="console-cursor"
-/>
+>
+   
+</span>
 `;

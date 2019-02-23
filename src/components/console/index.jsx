@@ -216,7 +216,7 @@ class Console extends React.Component {
               this.state,
               nextProps,
               {
-                lines: nextProps.lines
+                lines: Array.isArray(nextProps.lines) && nextProps.lines || [ nextProps.lines ]
               }
             ],
             {

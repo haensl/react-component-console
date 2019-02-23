@@ -49,23 +49,23 @@ describe('Console', () => {
             onFinishWritingLine={ lineCallback }
           />
         );
-        component.update();
-        jest.advanceTimersByTime(maxCharTimeout);
-        component.update();
       });
 
       it('renders as expected', () => {
+        component.update();
         expect(component).toMatchSnapshot();
       });
 
       describe('Cursor', () => {
         it('writes the first character', () => {
+          component.update();
           expect(component.find('Cursor').prop('char')).toEqual('t');
         });
       });
 
       describe('Line', () => {
         it('writes the first character', () => {
+          component.update();
           expect(component.find('Line').prop('content')).toEqual('t');
         });
       });
