@@ -53,7 +53,7 @@ module.exports = [
           '**/*.test.js'
         ]
       }),
-      //uglify()
+      uglify()
     ]
   }
 ];
