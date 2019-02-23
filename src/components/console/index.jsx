@@ -116,7 +116,6 @@ class Console extends React.Component {
     }
 
     for (let currentLine = this.state.console.currentLine || 0; currentLine < this.state.lines.length; currentLine++) {
-      console.log('currentLine', currentLine);
       await this.awaitableSetState({
         console: merge(
           this.state.console,
@@ -189,6 +188,10 @@ class Console extends React.Component {
       if (state.lines
         && typeof state.lines === 'string') {
         state.lines = [ state.lines ];
+      }
+
+      if (Array.isArray(state.lines) && state.lines.length) {
+        state.console.currentLine = 0;
       }
 
       const self = this;

@@ -50,6 +50,8 @@ describe('Console', () => {
           />
         );
         component.update();
+        jest.advanceTimersByTime(maxCharTimeout);
+        component.update();
       });
 
       it('renders as expected', () => {
