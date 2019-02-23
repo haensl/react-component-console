@@ -2,15 +2,12 @@
   background-color: transparent;
   position: relative;
   margin-right: auto;
+  text-align: left;
 }
 
 .console-cursor--write {
   left: -.6em;
   color: #fff;
-}
-
-.console-cursor--blink::before {
-  content: "\00a0";
 }
 
 .console-cursor--blink,

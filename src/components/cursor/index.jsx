@@ -75,7 +75,7 @@ class Cursor extends React.Component {
 
     return (
       <span className={ classesString }>{
-        this.props.char
+        this.props.char || ' '
       }</span>
     );
   }

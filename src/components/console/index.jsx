@@ -6,17 +6,20 @@ import math from '../../util/math';
 import array from '../../util/array';
 
 const isClient = typeof window === 'object';
+const initialState = {
+  console: {
+    text: '',
+    hasFinishedWritingLines: false
+  },
+  initialized: false
+};
+
+const overwriteArrays = (dst, src, opts) => src;
 
 class Console extends React.Component {
   constructor() {
     super();
-    this.state = {
-      console: {
-        text: '',
-        hasFinishedWritingLines: false
-      },
-      initialized: false
-    };
+    this.state = merge({}, initialState);
   }
 
   getDelay(opts = defaults.console.typing.char) {
@@ -100,9 +103,21 @@ class Console extends React.Component {
       }));
   }
 
-  async *linesGenerator(lines) {
-    for (let currentLine = 0; currentLine < lines.length; currentLine++) {
-      this.setState({
+  awaitableSetState(state) {
+    const self = this;
+    return new Promise((resolve) => {
+      self.setState(state, resolve);
+    });
+  }
+
+  async *linesGenerator() {
+    if (!(Array.isArray(this.state.lines) && this.state.lines.length)) {
+      return;
+    }
+
+    for (let currentLine = this.state.console.currentLine || 0; currentLine < this.state.lines.length; currentLine++) {
+      console.log('currentLine', currentLine);
+      await this.awaitableSetState({
         console: merge(
           this.state.console,
           {
@@ -111,10 +126,10 @@ class Console extends React.Component {
         )
       });
 
-      await this.writeLine(lines[currentLine]);
+      await this.writeLine(this.state.lines[currentLine]);
 
       if (this.state.console.append) {
-        this.setState({
+        await this.awaitableSetState({
           console: merge(
             this.state.console,
             {
@@ -124,13 +139,19 @@ class Console extends React.Component {
         });
       }
 
-      yield lines[currentLine];
+      yield this.state.lines[currentLine];
     }
   }
 
   async writeLines() {
-    const lines = this.state.lines || [];
-    for await (const line of this.linesGenerator(lines)) {
+    await this.awaitableSetState({
+      console: merge(
+        this.state.console,
+        { hasFinishedWritingLines: false }
+      )
+    });
+
+    for await (const line of this.linesGenerator()) {
       if (typeof this.props.onFinishWritingLine === 'function') {
         this.props.onFinishWritingLine(line);
       }
@@ -143,22 +164,27 @@ class Console extends React.Component {
     }
 
     this.clearTimeouts();
-    const callback = this.props.onFinishWritingLines;
-    this.setState(newState, () => {
-      if (typeof callback === 'function') {
-        callback(lines);
-      }
-    });
+    await this.awaitableSetState(newState);
+    if (typeof this.props.onFinishWritingLines === 'function') {
+      this.props.onFinishWritingLines(this.state.lines);
+    }
   }
 
   get isWriting() {
-    return typeof this.state.currentLine === 'number'
+    return typeof this.state.console.currentLine === 'number'
       && !this.state.console.hasFinishedWritingLines;
   }
 
   initialize(props) {
     if (isClient) {
-      const state = merge.all([defaults, this.state, props]);
+      const state = merge.all([
+        defaults,
+        this.state,
+        initialState,
+        props
+      ], {
+        arrayMerge: overwriteArrays
+      });
       state.initialized = true;
       if (state.lines
         && typeof state.lines === 'string') {
@@ -177,13 +203,46 @@ class Console extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    if (isClient
-      && !array.equals(nextProps.lines, this.state.lines)) {
-      if (this.isWriting) {
-        this.stopWriting();
-      }
+    if (isClient && this.state.initialized) {
+      if(!array.equals(nextProps.lines, this.state.lines)) {
+        if (nextProps.lines.length > this.state.lines.length
+          && array.isSubset(this.state.lines, nextProps.lines, 0)) {
+          const self = this;
+          this.setState(merge.all(
+            [
+              this.state,
+              nextProps,
+              {
+                lines: nextProps.lines
+              }
+            ],
+            {
+              arrayMerge: overwriteArrays
+            }
+          ), () => {
+            if (!self.isWriting || self.state.console.hasFinishedWritingLines) {
+              self.setState({
+                console: merge(
+                  this.state.console,
+                  {
+                    text: '',
+                    currentLine: self.state.console.currentLine + 1,
+                    hasFinishedWritingLines: false
+                  }
+                )
+              }, () => {
+                self.writeLines();
+              });
+            }
+          });
+        } else {
+          if (this.isWriting) {
+            this.stopWriting();
+          }
 
-      this.initialize(nextProps);
+          this.initialize(nextProps);
+        }
+      }
     }
   }
 

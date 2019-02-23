@@ -1,3 +1,7 @@
+## 0.5.0
+* [#7: Add rollup config](https://github.com/haensl/react-component-console/issues/7)
+* Enable lines to be expanded while writing without interruption.
+
 ## 0.4.0
 * [#6: Migrate Console component.](https://github.com/haensl/react-component-console/issues/6)
 
