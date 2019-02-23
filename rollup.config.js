@@ -2,7 +2,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const localResolve = require('@haensl/rollup-plugin-local-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
-const uglify = require('rollup-plugin-uglify').uglify;
+const minify = require('rollup-plugin-terser').terser;
 const postcss = require('rollup-plugin-postcss');
 
 const globals = {
@@ -53,7 +53,9 @@ module.exports = [
           '**/*.test.js'
         ]
       }),
-      uglify()
+      minify({
+        sourcemap: true
+      })
     ]
   }
 ];

@@ -5,7 +5,8 @@
   "main": "dist/index.js",
   "module": "dist/es/index.js",
   "scripts": {
-    "build": "npm run clean && cross-env NODE_ENV=es rollup -c",
+    "build": "npm run clean && npm run build:module",
+    "build:module": "cross-env NODE_ENV=es BABEL_ENV=es rollup -c",
     "clean": "rimraf ./dist",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
     "prepare": "npm run build",
@@ -106,7 +107,7 @@
     "rollup-plugin-commonjs": "^9.2.0",
     "rollup-plugin-node-resolve": "^4.0.0",
     "rollup-plugin-postcss": "^2.0.3",
-    "rollup-plugin-uglify": "^6.0.2",
+    "rollup-plugin-terser": "^4.0.4",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.5"
   },
