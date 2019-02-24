@@ -1,15 +1,15 @@
-.console-cursor {
+.Console-Cursor {
   background-color: transparent;
   position: relative;
   margin-right: auto;
 }
 
-.console-cursor--write {
+.Console-Cursor--write {
   left: -.6em;
   color: #fff;
 }
 
-.console-cursor--blink,
-.console-cursor--write {
+.Console-Cursor--blink,
+.Console-Cursor--write {
   background-color: #000;
 }

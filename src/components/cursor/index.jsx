@@ -1,11 +1,11 @@
 import React from 'react';
-import './cursor.css';
+import './Cursor.css';
 
 export const defaults = {
   classes: {
-    blink: 'console-cursor--blink',
-    element: 'console-cursor',
-    write: 'console-cursor--write'
+    blink: 'Console-Cursor--blink',
+    element: 'Console-Cursor',
+    write: 'Console-Cursor--write'
   },
   intervalMs: 400
 };

@@ -1,12 +1,12 @@
-import { defaults as ps1Defaults } from '../ps1';
-import { defaults as lineDefaults } from '../line';
-import { defaults as cursorDefaults } from '../cursor';
+import { defaults as ps1Defaults } from '../PS1';
+import { defaults as lineDefaults } from '../Line';
+import { defaults as cursorDefaults } from '../Cursor';
 
 export default {
   console: {
     append: false,
     classes: {
-      element: 'console'
+      element: 'Console'
     },
     typing: {
       char: {

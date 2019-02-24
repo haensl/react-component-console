@@ -12,10 +12,10 @@ exports[`Line classes renders as expected 1`] = `
 
 exports[`Line content renders as expected 1`] = `
 <pre
-  className="console-line"
+  className="Console-Line"
 >
   <span
-    className="console-line-content"
+    className="Console-Line-content"
   >
     foo bar
   </span>
@@ -24,38 +24,38 @@ exports[`Line content renders as expected 1`] = `
 
 exports[`Line empty renders as expected 1`] = `
 <pre
-  className="console-line"
+  className="Console-Line"
 >
   <span
-    className="console-line-content"
+    className="Console-Line-content"
   />
 </pre>
 `;
 
 exports[`Line ps1 renders as expected 1`] = `
 <pre
-  className="console-line"
+  className="Console-Line"
 >
   <span
-    className="console-ps1"
+    className="Console-PS1"
   >
     ~
   </span>
   <span
-    className="console-line-content"
+    className="Console-Line-content"
   />
 </pre>
 `;
 
 exports[`Line write renders as expected 1`] = `
 <pre
-  className="console-line"
+  className="Console-Line"
 >
   <span
-    className="console-line-content"
+    className="Console-Line-content"
   />
   <span
-    className="console-cursor console-cursor--write"
+    className="Console-Cursor Console-Cursor--write"
   >
     t
   </span>

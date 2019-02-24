@@ -1,9 +1,9 @@
 import React from 'react';
-import './ps1.css';
+import './PS1.css';
 
 export const defaults = {
   classes: {
-    element: 'console-ps1'
+    element: 'Console-PS1'
   },
   content: '$'
 };

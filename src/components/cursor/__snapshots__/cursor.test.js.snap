@@ -2,7 +2,7 @@
 
 exports[`Cursor char renders as expected 1`] = `
 <span
-  className="console-cursor console-cursor--write"
+  className="Console-Cursor Console-Cursor--write"
 >
   t
 </span>
@@ -18,7 +18,7 @@ exports[`Cursor classes renders as expected 1`] = `
 
 exports[`Cursor empty renders as expeted 1`] = `
 <span
-  className="console-cursor"
+  className="Console-Cursor"
 >
    
 </span>
