@@ -9,6 +9,7 @@ const maxCharTimeout = defaults.console.typing.char.avgMs
   + (defaults.console.typing.char.deviation * defaults.console.typing.char.avgMs);
 const maxNewlineTimeout = defaults.console.typing.line.delay.avgMs
   + (defaults.console.typing.line.delay.deviation * defaults.console.typing.line.delay.avgMs);
+const waitForAsync = () => new Promise((resolve) => setImmediate(resolve));
 
 describe('Console', () => {
   let tree;
@@ -38,7 +39,7 @@ describe('Console', () => {
       let lineCallback;
       let linesCallback;
 
-      beforeEach(() => {
+      beforeEach(async () => {
         line = 'test line.';
         lineCallback = jest.fn();
         linesCallback = jest.fn();
@@ -49,6 +50,7 @@ describe('Console', () => {
             onFinishWritingLine={ lineCallback }
           />
         );
+        await waitForAsync();
       });
 
       it('renders as expected', () => {
@@ -116,8 +118,11 @@ describe('Console', () => {
             });
           });
 
-          describe.skip('onFinishWritingLines', () => {
-            beforeEach(() => {
+          describe('onFinishWritingLines', () => {
+            beforeEach(async () => {
+              await waitForAsync();
+              jest.runOnlyPendingTimers();
+              await waitForAsync();
               jest.runOnlyPendingTimers();
             });
 
@@ -126,8 +131,9 @@ describe('Console', () => {
             });
           });
 
-          describe.skip('onFinishWritingLine', () => {
-            beforeEach(() => {
+          describe('onFinishWritingLine', () => {
+            beforeEach(async () => {
+              await waitForAsync();
               jest.runOnlyPendingTimers();
             });
 
@@ -146,7 +152,7 @@ describe('Console', () => {
       let lineCallback;
       let linesCallback;
 
-      beforeEach(() => {
+      beforeEach(async () => {
         lineCallback = jest.fn();
         linesCallback = jest.fn();
         lines = [
@@ -162,6 +168,7 @@ describe('Console', () => {
             onFinishWritingLines={ linesCallback }
           />
         );
+        await waitForAsync();
       });
 
       describe('first line', () => {
@@ -220,16 +227,6 @@ describe('Console', () => {
               expect(component).toMatchSnapshot();
             });
 
-            describe.skip('onFinishWritingLine', () => {
-              beforeEach(() => {
-                jest.advanceTimersByTime(maxNewlineTimeout + maxCharTimeout);
-              });
-
-              it('calls the onFinishWritingLine callback', () => {
-                expect(lineCallback).toHaveBeenCalledWith(line);
-              });
-            });
-
             describe('Cursor', () => {
               it('writes the last character', () => {
                 expect(component.find('Cursor').prop('char')).toEqual(line.slice(-1));
@@ -242,11 +239,19 @@ describe('Console', () => {
               });
             });
 
-            describe.skip('second line', () => {
-              beforeEach(() => {
+            describe('second line', () => {
+              beforeEach(async () => {
                 line = lines[1];
-                jest.advanceTimersByTime(maxNewlineTimeout + maxCharTimeout);
+                await waitForAsync();
+                jest.advanceTimersByTime(maxNewlineTimeout);
+                await waitForAsync();
                 component.update();
+              });
+
+              describe('onFinishWritingLine', () => {
+                it('calls the onFinishWritingLine callback', () => {
+                  expect(lineCallback).toHaveBeenCalledWith(lines[0]);
+                });
               });
 
               it('renders as expected', () => {
@@ -312,12 +317,24 @@ describe('Console', () => {
                   });
 
                   describe('onFinishWritingLine', () => {
+                    beforeEach(async () => {
+                      await waitForAsync();
+                      jest.runOnlyPendingTimers();
+                    });
+
                     it('calls the onFinishWritingLine callback the second time', () => {
                       expect(lineCallback).toHaveBeenCalledTimes(2);
                     });
                   });
 
                   describe('onFinishWritingLines', () => {
+                    beforeEach(async () => {
+                      await waitForAsync();
+                      jest.runOnlyPendingTimers();
+                      await waitForAsync();
+                      jest.runOnlyPendingTimers();
+                    });
+
                     it('calls the onFinishWritingLines callback', () => {
                       expect(linesCallback).toHaveBeenCalled();
                     });

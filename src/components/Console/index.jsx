@@ -11,6 +11,7 @@ const initialState = {
     text: '',
     hasFinishedWritingLines: false
   },
+  lines: null,
   initialized: false
 };
 
@@ -39,10 +40,10 @@ class Console extends React.Component {
     );
   }
 
-  consumeLine(line) {
+  async consumeLine(line) {
     if (line.length) {
       const c = line.slice(0, 1);
-      return new Promise((resolve) => {
+      await new Promise((resolve) => {
         this.setState({
           console: merge(
             this.state.console,
@@ -70,8 +71,8 @@ class Console extends React.Component {
     return Promise.resolve();
   }
 
-  writeLine(line) {
-    this.setState({
+  async writeLine(line) {
+    await this.awaitableSetState({
       console: merge(
         this.state.console,
         {
@@ -79,28 +80,25 @@ class Console extends React.Component {
         }
       )
     });
-
+    await this.consumeLine(line);
+    await this.awaitableSetState({
+      cursor: merge(
+        this.state.cursor,
+        {
+          char: null
+        }
+      )
+    });
     const self = this;
-    return this.consumeLine(line)
-      .then(() => {
-        self.setState({
-          cursor: merge(
-            self.state.cursor,
-            {
-              char: null
-            }
-          )
-        });
-      })
-      .then(() => new Promise((resolve) => {
-        self.setState({
-          timeouts: (self.state.timeouts || []).concat([
-            window.setTimeout(() => {
-              resolve();
-            }, self.getDelay(self.state.console.typing.line.delay))
-          ])
-        });
-      }));
+    return new Promise((resolve) => {
+      self.setState({
+        timeouts: (self.state.timeouts || []).concat([
+          window.setTimeout(() => {
+            resolve();
+          }, self.getDelay(self.state.console.typing.line.delay))
+        ])
+      });
+    });
   }
 
   awaitableSetState(state) {
@@ -174,30 +172,142 @@ class Console extends React.Component {
       && !this.state.console.hasFinishedWritingLines;
   }
 
-  initialize(props) {
+  async initialize(props) {
     if (isClient) {
-      const state = merge.all([
+      await this.updateFromProps(
+        props,
+        {
+          ...initialState,
+          lines: this.state.lines,
+          initialized: true
+        }
+      );
+
+      const lines = this.linesFromProps(props);
+      if (lines) {
+        this.onReceiveLines(lines);
+      }
+    }
+  }
+
+  linesFromProps(props) {
+    if (!props || !props.lines) {
+      return null;
+    }
+
+    if (Array.isArray(props.lines)) {
+      return props.lines.map((line) => line.toString());
+    } else {
+      return [ props.lines.toString() ];
+    }
+  }
+
+  async updateFromProps(props, overwrites = {}) {
+    await this.awaitableSetState(
+      merge.all([
         defaults,
         this.state,
-        initialState,
-        props
+        props,
+        overwrites
       ], {
         arrayMerge: overwriteArrays
+      })
+    );
+  }
+
+  async onReceiveLines(nextLines) {
+    if (!Array.isArray(nextLines)) {
+      throw new Error(`Invalid parameter: Lines. Expected Array. Received ${typeof nextLines}\n${nextLines}`);
+    }
+
+    if (!this.state.lines) {
+      await this.awaitableSetState({
+        console: merge(
+          this.state.console,
+          {
+            text: '',
+            currentLine: 0,
+            hasFinishedWritingLines: false
+          }
+        ),
+        lines: nextLines
       });
-      state.initialized = true;
-      if (state.lines
-        && typeof state.lines === 'string') {
-        state.lines = [ state.lines ];
+      this.writeLines();
+      return;
+    }
+
+    if (array.equals(nextLines, this.state.lines)) {
+      return;
+    }
+
+    // lines added
+    if (nextLines.length > this.state.lines.length
+      && array.isSubset(this.state.lines, nextLines, 0)) {
+      await this.awaitableSetState({
+        lines: nextLines
+      });
+      if (!this.isWriting || this.state.console.hasFinishedWritingLines) {
+        await this.awaitableSetState({
+          console: merge(
+            this.state.console,
+            {
+              text: '',
+              currentLine: this.state.console.currentLine + 1,
+              hasFinishedWritingLines: false
+            }
+          )
+        });
+        this.writeLines();
+      }
+    // lines removed
+    } else if (nextLines.length < this.state.lines.length
+      && array.isSubset(nextLines, this.state.lines)) {
+      await this.awaitableSetState({
+        lines: nextLines
+      });
+      if (this.isWriting
+        && this.state.console.currentLine >= nextLines.length) {
+        await this.stopWriting();
+        await this.awaitableSetState({
+          console: merge(
+            this.state.console,
+            {
+              text: nextLines[nextLines.length - 1],
+              currentLine: nextLines.length - 1,
+              hasFinishedWritingLines: true
+            }
+          )
+        });
+      } else if (!this.isWriting) {
+        await this.awaitableSetState({
+          console: merge(
+            this.state.console,
+            {
+              text: nextLines[nextLines.length - 1],
+              currentLine: nextLines.length - 1,
+              hasFinishedWritingLines: true
+            }
+          )
+        });
+      }
+    // lines changed
+    } else {
+      if (this.isWriting) {
+        this.stopWriting();
       }
 
-      if (Array.isArray(state.lines) && state.lines.length) {
-        state.console.currentLine = 0;
-      }
-
-      const self = this;
-      this.setState(state, () => {
-        self.writeLines();
+      await this.awaitableSetState({
+        console: merge(
+          this.state.console,
+          {
+            text: '',
+            currentLine: 0,
+            hasFinishedWritingLines: false
+          }
+        ),
+        lines: nextLines
       });
+      this.writeLines();
     }
   }
 
@@ -207,44 +317,15 @@ class Console extends React.Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (isClient && this.state.initialized) {
-      if(!array.equals(nextProps.lines, this.state.lines)) {
-        if (nextProps.lines.length > this.state.lines.length
-          && array.isSubset(this.state.lines, nextProps.lines, 0)) {
-          const self = this;
-          this.setState(merge.all(
-            [
-              this.state,
-              nextProps,
-              {
-                lines: Array.isArray(nextProps.lines) && nextProps.lines || [ nextProps.lines ]
-              }
-            ],
-            {
-              arrayMerge: overwriteArrays
-            }
-          ), () => {
-            if (!self.isWriting || self.state.console.hasFinishedWritingLines) {
-              self.setState({
-                console: merge(
-                  this.state.console,
-                  {
-                    text: '',
-                    currentLine: self.state.console.currentLine + 1,
-                    hasFinishedWritingLines: false
-                  }
-                )
-              }, () => {
-                self.writeLines();
-              });
-            }
-          });
-        } else {
-          if (this.isWriting) {
-            this.stopWriting();
-          }
-
-          this.initialize(nextProps);
-        }
+      const currentLines = Array.isArray(this.state.lines)
+        ? [].concat(this.state.lines)
+        : null;
+      this.updateFromProps(nextProps, {
+        lines: currentLines
+      });
+      const lines = this.linesFromProps(nextProps);
+      if (lines) {
+        this.onReceiveLines(lines);
       }
     }
   }
@@ -253,21 +334,20 @@ class Console extends React.Component {
     this.stopWriting();
   }
 
-  clearTimeouts() {
+  async clearTimeouts() {
     (this.state.timeouts || []).forEach((t) => window.clearTimeout(t));
-    this.setState({
+    await this.awaitableSetState({
       timeouts: []
     });
   }
 
-  stopWriting() {
+  async stopWriting() {
     if (isClient && this.state.timeouts) {
-      this.clearTimeouts();
-      this.setState({
+      await this.clearTimeouts();
+      await this.awaitableSetState({
         console: merge(
           this.state.console,
           {
-            currentLine: null,
             hasFinishedWritingLines: false
           }
         )
