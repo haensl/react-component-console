@@ -1,6 +1,6 @@
 import React from 'react';
 import merge from 'deepmerge';
-import Line from '../line';
+import Line from '../Line';
 import defaults from './defaults';
 import math from '../../util/math';
 import array from '../../util/array';
