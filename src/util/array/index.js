@@ -8,8 +8,8 @@ const equals = (a, b) => {
   }
 
   for (let i = 0; i < a.length; i++) {
-    if (a[i] instanceof Array
-      && b[i] instanceof Array) {
+    if (Array.isArray(a[i])
+      && Array.isArray(b[i])) {
       if (!equals(a[i], b[i])) {
         return false;
       }
@@ -21,7 +21,34 @@ const equals = (a, b) => {
   return true;
 };
 
+const isSubset = (subset, superset, index = -1) => {
+  if (!(Array.isArray(subset) && Array.isArray(superset))) {
+    throw new Error('Invalid parameter: expected array.');
+  }
+
+  if (subset.length > superset.length) {
+    return false;
+  }
+
+  if (index > -1) {
+    if (index + subset.length >= superset.length) {
+      throw new Error('Index out of bounds!');
+    }
+
+    return equals(subset, superset.slice(index, index + subset.length));
+  }
+
+  for (let i = 0; i + subset.length <= superset.length; i++) {
+    if (equals(subset, superset.slice(i, i + subset.length))) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 export default {
-  equals
+  equals,
+  isSubset
 };
 

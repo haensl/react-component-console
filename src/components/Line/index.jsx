@@ -1,11 +1,11 @@
 import React from 'react';
-import PS1 from '../ps1';
-import Cursor from '../cursor';
+import PS1 from '../PS1';
+import Cursor from '../Cursor';
 
 export const defaults = {
   classes: {
-    element: 'console-line',
-    content: 'console-line-content'
+    element: 'Console-Line',
+    content: 'Console-Line-content'
   }
 };
 

@@ -10,7 +10,7 @@ exports[`PS1 classes renders as expected 1`] = `
 
 exports[`PS1 content renders as expected 1`] = `
 <span
-  className="console-ps1"
+  className="Console-PS1"
 >
   ~
 </span>
@@ -18,7 +18,7 @@ exports[`PS1 content renders as expected 1`] = `
 
 exports[`PS1 empty renders as expected 1`] = `
 <span
-  className="console-ps1"
+  className="Console-PS1"
 >
   $
 </span>

@@ -1,0 +1,15 @@
+.Console-Cursor {
+  background-color: transparent;
+  position: relative;
+  margin-right: auto;
+}
+
+.Console-Cursor--write {
+  left: -.6em;
+  color: #fff;
+}
+
+.Console-Cursor--blink,
+.Console-Cursor--write {
+  background-color: #000;
+}

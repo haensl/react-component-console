@@ -2,22 +2,22 @@
 
 exports[`Console empty renders as expected 1`] = `
 <div
-  className="console"
+  className="Console"
 >
   <Line
     classes={
       Object {
-        "content": "console-line-content",
-        "element": "console-line",
+        "content": "Console-Line-content",
+        "element": "Console-Line",
       }
     }
     content=""
     cursor={
       Object {
         "classes": Object {
-          "blink": "console-cursor--blink",
-          "element": "console-cursor",
-          "write": "console-cursor--write",
+          "blink": "Console-Cursor--blink",
+          "element": "Console-Cursor",
+          "write": "Console-Cursor--write",
         },
         "intervalMs": 400,
       }
@@ -25,7 +25,7 @@ exports[`Console empty renders as expected 1`] = `
     ps1={
       Object {
         "classes": Object {
-          "element": "console-ps1",
+          "element": "Console-PS1",
         },
         "content": "$",
       }
@@ -47,13 +47,13 @@ exports[`Console writing array of strings first line after some time after the w
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="test line."
@@ -61,9 +61,9 @@ exports[`Console writing array of strings first line after some time after the w
         Object {
           "char": ".",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -71,7 +71,7 @@ exports[`Console writing array of strings first line after some time after the w
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -79,24 +79,24 @@ exports[`Console writing array of strings first line after some time after the w
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           test line.
         </span>
@@ -104,15 +104,15 @@ exports[`Console writing array of strings first line after some time after the w
           char="."
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             .
           </span>
@@ -131,27 +131,41 @@ exports[`Console writing array of strings first line after some time after the w
       "another line.",
     ]
   }
-  onFinishWritingLine={[MockFunction]}
+  onFinishWritingLine={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "test line.",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
-      content="test line."
+      content="another line."
       cursor={
         Object {
-          "char": null,
+          "char": ".",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -159,7 +173,7 @@ exports[`Console writing array of strings first line after some time after the w
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -167,41 +181,43 @@ exports[`Console writing array of strings first line after some time after the w
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
-          test line.
+          another line.
         </span>
         <Cursor
-          char={null}
+          char="."
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor"
-          />
+            className="Console-Cursor Console-Cursor--write"
+          >
+            .
+          </span>
         </Cursor>
       </pre>
     </Line>
@@ -217,27 +233,41 @@ exports[`Console writing array of strings first line after some time after the w
       "another line.",
     ]
   }
-  onFinishWritingLine={[MockFunction]}
+  onFinishWritingLine={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "test line.",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
-      content="test line."
+      content="an"
       cursor={
         Object {
-          "char": ".",
+          "char": "n",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -245,7 +275,7 @@ exports[`Console writing array of strings first line after some time after the w
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -253,42 +283,42 @@ exports[`Console writing array of strings first line after some time after the w
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
-          test line.
+          an
         </span>
         <Cursor
-          char="."
+          char="n"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
-            .
+            n
           </span>
         </Cursor>
       </pre>
@@ -305,27 +335,41 @@ exports[`Console writing array of strings first line after some time after the w
       "another line.",
     ]
   }
-  onFinishWritingLine={[MockFunction]}
+  onFinishWritingLine={
+    [MockFunction] {
+      "calls": Array [
+        Array [
+          "test line.",
+        ],
+      ],
+      "results": Array [
+        Object {
+          "type": "return",
+          "value": undefined,
+        },
+      ],
+    }
+  }
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
-      content="test line."
+      content="a"
       cursor={
         Object {
-          "char": ".",
+          "char": "a",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -333,7 +377,7 @@ exports[`Console writing array of strings first line after some time after the w
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -341,42 +385,42 @@ exports[`Console writing array of strings first line after some time after the w
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
-          test line.
+          a
         </span>
         <Cursor
-          char="."
+          char="a"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
-            .
+            a
           </span>
         </Cursor>
       </pre>
@@ -397,13 +441,13 @@ exports[`Console writing array of strings first line after some time renders as 
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="te"
@@ -411,9 +455,9 @@ exports[`Console writing array of strings first line after some time renders as 
         Object {
           "char": "e",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -421,7 +465,7 @@ exports[`Console writing array of strings first line after some time renders as 
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -429,24 +473,24 @@ exports[`Console writing array of strings first line after some time renders as 
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           te
         </span>
@@ -454,15 +498,15 @@ exports[`Console writing array of strings first line after some time renders as 
           char="e"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             e
           </span>
@@ -485,13 +529,13 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="t"
@@ -499,9 +543,9 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
         Object {
           "char": "t",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -509,7 +553,7 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -517,24 +561,24 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           t
         </span>
@@ -542,15 +586,15 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
           char="t"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             t
           </span>
@@ -568,13 +612,13 @@ exports[`Console writing string after some time after the whole line has been wr
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="test line."
@@ -582,9 +626,9 @@ exports[`Console writing string after some time after the whole line has been wr
         Object {
           "char": ".",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -592,7 +636,7 @@ exports[`Console writing string after some time after the whole line has been wr
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -600,24 +644,24 @@ exports[`Console writing string after some time after the whole line has been wr
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           test line.
         </span>
@@ -625,15 +669,15 @@ exports[`Console writing string after some time after the whole line has been wr
           char="."
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             .
           </span>
@@ -651,13 +695,13 @@ exports[`Console writing string after some time renders as expected 1`] = `
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="te"
@@ -665,9 +709,9 @@ exports[`Console writing string after some time renders as expected 1`] = `
         Object {
           "char": "e",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -675,7 +719,7 @@ exports[`Console writing string after some time renders as expected 1`] = `
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -683,24 +727,24 @@ exports[`Console writing string after some time renders as expected 1`] = `
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           te
         </span>
@@ -708,15 +752,15 @@ exports[`Console writing string after some time renders as expected 1`] = `
           char="e"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             e
           </span>
@@ -734,13 +778,13 @@ exports[`Console writing string renders as expected 1`] = `
   onFinishWritingLines={[MockFunction]}
 >
   <div
-    className="console"
+    className="Console"
   >
     <Line
       classes={
         Object {
-          "content": "console-line-content",
-          "element": "console-line",
+          "content": "Console-Line-content",
+          "element": "Console-Line",
         }
       }
       content="t"
@@ -748,9 +792,9 @@ exports[`Console writing string renders as expected 1`] = `
         Object {
           "char": "t",
           "classes": Object {
-            "blink": "console-cursor--blink",
-            "element": "console-cursor",
-            "write": "console-cursor--write",
+            "blink": "Console-Cursor--blink",
+            "element": "Console-Cursor",
+            "write": "Console-Cursor--write",
           },
           "intervalMs": 400,
         }
@@ -758,7 +802,7 @@ exports[`Console writing string renders as expected 1`] = `
       ps1={
         Object {
           "classes": Object {
-            "element": "console-ps1",
+            "element": "Console-PS1",
           },
           "content": "$",
         }
@@ -766,24 +810,24 @@ exports[`Console writing string renders as expected 1`] = `
       write={true}
     >
       <pre
-        className="console-line"
+        className="Console-Line"
       >
         <PS1
           classes={
             Object {
-              "element": "console-ps1",
+              "element": "Console-PS1",
             }
           }
           content="$"
         >
           <span
-            className="console-ps1"
+            className="Console-PS1"
           >
             $
           </span>
         </PS1>
         <span
-          className="console-line-content"
+          className="Console-Line-content"
         >
           t
         </span>
@@ -791,15 +835,15 @@ exports[`Console writing string renders as expected 1`] = `
           char="t"
           classes={
             Object {
-              "blink": "console-cursor--blink",
-              "element": "console-cursor",
-              "write": "console-cursor--write",
+              "blink": "Console-Cursor--blink",
+              "element": "Console-Cursor",
+              "write": "Console-Cursor--write",
             }
           }
           intervalMs={400}
         >
           <span
-            className="console-cursor console-cursor--write"
+            className="Console-Cursor Console-Cursor--write"
           >
             t
           </span>
