@@ -19,6 +19,8 @@ const initialState = {
 const overwriteArrays = (dst, src, opts) => src;
 
 class Console extends React.Component {
+  _isMounted = false;
+
   constructor() {
     super();
     this.state = merge({}, initialState);
@@ -42,7 +44,7 @@ class Console extends React.Component {
   }
 
   async consumeLine(line) {
-    if (line.length) {
+    if (line.length && this.isMounted) {
       const c = line.slice(0, 1);
       await new Promise((resolve) => {
         this.setState({
@@ -73,6 +75,10 @@ class Console extends React.Component {
   }
 
   async writeLine(line) {
+    if (!this.isMounted) {
+      return;
+    }
+
     await this.awaitableSetState({
       console: merge(
         this.state.console,
@@ -103,10 +109,12 @@ class Console extends React.Component {
   }
 
   awaitableSetState(state) {
-    const self = this;
-    return new Promise((resolve) => {
-      self.setState(state, resolve);
-    });
+    if (this.isMounted) {
+      const self = this;
+      return new Promise((resolve) => {
+        self.setState(state, resolve);
+      });
+    }
   }
 
   async *linesGenerator() {
@@ -142,6 +150,10 @@ class Console extends React.Component {
   }
 
   async writeLines() {
+    if (!this.isMounted) {
+      return;
+    }
+
     await this.awaitableSetState({
       console: merge(
         this.state.console,
@@ -171,6 +183,10 @@ class Console extends React.Component {
   get isWriting() {
     return typeof this.state.console.currentLine === 'number'
       && !this.state.console.hasFinishedWritingLines;
+  }
+
+  get isMounted() {
+    return this._isMounted;
   }
 
   async initialize(props) {
@@ -313,6 +329,7 @@ class Console extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.initialize(this.props);
   }
 
@@ -333,6 +350,7 @@ class Console extends React.Component {
 
   componentWillUnmount() {
     this.stopWriting();
+    this._isMounted = false;
   }
 
   async clearTimeouts() {

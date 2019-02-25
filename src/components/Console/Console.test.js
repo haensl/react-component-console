@@ -16,19 +16,23 @@ describe('Console', () => {
   let component;
 
   describe('empty', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
       tree = shallow(<Console />);
+      await waitForAsync();
     });
 
     it('renders as expected', () => {
+      tree.update();
       expect(tree).toMatchSnapshot();
     });
 
     it('adds the default class to the element', () => {
+      tree.update();
       expect(tree.hasClass(defaults.console.classes.element)).toBe(true);
     });
 
     it('renders the Line component', () => {
+      tree.update();
       expect(tree.find('Line').length).toBe(1);
     });
   });

@@ -1,3 +1,6 @@
+## 1.0.3
+* [#15: Prevent setState() on unmounted component.](https://github.com/haensl/react-component-console/issues/15)
+
 ## 1.0.2
 * Require regenerator-runtime.
 
