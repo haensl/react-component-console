@@ -1,3 +1,6 @@
+## 1.0.0
+* [#8: Add continuous delivery.](https://github.com/haensl/react-component-console/issues/8)
+
 ## 0.6.0
 * [#12: Add documentation.](https://github.com/haensl/react-component-console/issues/12)
 
