@@ -1,6 +1,6 @@
 {
   "name": "react-component-console",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A console emulator for React.",
   "main": "dist/index.js",
   "module": "dist/es/index.js",
@@ -70,6 +70,7 @@
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.3",
     "@babel/plugin-external-helpers": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-flow": "^7.0.0",

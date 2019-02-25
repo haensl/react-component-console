@@ -11,7 +11,8 @@
           {
             "regenerator": true
           }
-        ]
+        ],
+        "@babel/plugin-proposal-class-properties"
       ]
     },
     "test": {
@@ -25,7 +26,8 @@
           {
             "regenerator": true
           }
-        ]
+        ],
+        "@babel/plugin-proposal-class-properties"
       ]
     },
     "production": {
@@ -39,7 +41,8 @@
           {
             "regenerator": true
           }
-        ]
+        ],
+        "@babel/plugin-proposal-class-properties"
       ]
     },
     "es": {
