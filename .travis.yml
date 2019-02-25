@@ -5,6 +5,8 @@ node_js:
 
 stages:
   - test
+  - name: deploy
+    if: branch = master
 
 jobs:
   include:
@@ -13,4 +15,12 @@ jobs:
 
     - stage: test
       script: npm test
+
+    - stage: deploy
+      node_js: "node"
+      deploy:
+        provider: npm
+        api_key: $NPM_API_KEY
+        email: $NPM_MAIL
+        skip_cleanup: true
 
