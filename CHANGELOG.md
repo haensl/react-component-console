@@ -1,5 +1,8 @@
+## 0.6.0
+* [#12: Add documentation.](https://github.com/haensl/react-component-console/issues/12)
+
 ## 0.5.0
-* [#7: Add rollup config](https://github.com/haensl/react-component-console/issues/7)
+* [#7: Add rollup config.](https://github.com/haensl/react-component-console/issues/7)
 * Enable lines to be expanded while writing without interruption.
 
 ## 0.4.0
