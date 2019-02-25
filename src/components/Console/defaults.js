@@ -13,7 +13,7 @@ export default {
         avgMs: 150,
         deviation: 0.3,
         minMs: 50,
-        maxMs: Infinity
+        maxMs: Number.MAX_SAFE_INTEGER
       },
       line: {
         delay: {

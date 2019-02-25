@@ -53,10 +53,9 @@ module.exports = [
           '**/*.test.js'
         ]
       }),
-      /**
       minify({
         sourcemap: true
-        })*/
+      })
     ]
   }
 ];
