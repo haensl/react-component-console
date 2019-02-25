@@ -1,6 +1,6 @@
 {
   "name": "react-component-console",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A console emulator for React.",
   "main": "dist/index.js",
   "module": "dist/es/index.js",
@@ -100,7 +100,6 @@
     "react-dom": "^16.8.2",
     "react-styleguidist": "^9.0.0",
     "react-test-renderer": "^16.8.2",
-    "regenerator-runtime": "^0.13.1",
     "rimraf": "^2.6.3",
     "rollup": "^1.2.2",
     "rollup-plugin-babel": "^4.3.2",
@@ -112,6 +111,7 @@
     "webpack": "^4.29.5"
   },
   "dependencies": {
-    "deepmerge": "^3.2.0"
+    "deepmerge": "^3.2.0",
+    "regenerator-runtime": "^0.13.1"
   }
 }

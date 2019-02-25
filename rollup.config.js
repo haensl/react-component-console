@@ -7,7 +7,8 @@ const postcss = require('rollup-plugin-postcss');
 
 const globals = {
   react: 'React',
-  deepmerge: 'deepmerge'
+  deepmerge: 'deepmerge',
+  regeneratorRuntime: 'regenerator-runtime'
 };
 
 module.exports = [

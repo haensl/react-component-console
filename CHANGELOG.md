@@ -1,3 +1,6 @@
+## 1.0.2
+* Require regenerator-runtime.
+
 ## 1.0.1
 * Set browser targets.
 

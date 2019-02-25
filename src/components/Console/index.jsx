@@ -1,5 +1,6 @@
 import React from 'react';
 import merge from 'deepmerge';
+import regeneratorRuntime from 'regenerator-runtime';
 import Line from '../Line';
 import defaults from './defaults';
 import math from '../../util/math';
