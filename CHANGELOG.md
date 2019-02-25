@@ -1,3 +1,6 @@
+## 1.0.1
+* Set browser targets.
+
 ## 1.0.0
 * [#8: Add continuous delivery.](https://github.com/haensl/react-component-console/issues/8)
 
