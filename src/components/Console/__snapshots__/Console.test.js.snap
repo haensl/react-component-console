@@ -22,6 +22,7 @@ exports[`Console empty renders as expected 1`] = `
         "intervalMs": 400,
       }
     }
+    key="active"
     ps1={
       Object {
         "classes": Object {
@@ -68,6 +69,7 @@ exports[`Console writing array of strings first line after some time after the w
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -170,6 +172,7 @@ exports[`Console writing array of strings first line after some time after the w
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -272,6 +275,7 @@ exports[`Console writing array of strings first line after some time after the w
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -374,6 +378,7 @@ exports[`Console writing array of strings first line after some time after the w
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -462,6 +467,7 @@ exports[`Console writing array of strings first line after some time renders as 
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -550,6 +556,7 @@ exports[`Console writing array of strings first line renders as expected 1`] = `
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -633,6 +640,7 @@ exports[`Console writing string after some time after the whole line has been wr
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -716,6 +724,7 @@ exports[`Console writing string after some time renders as expected 1`] = `
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
@@ -799,6 +808,7 @@ exports[`Console writing string renders as expected 1`] = `
           "intervalMs": 400,
         }
       }
+      key="active"
       ps1={
         Object {
           "classes": Object {
