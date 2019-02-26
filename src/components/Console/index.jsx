@@ -382,11 +382,12 @@ class Console extends React.Component {
     return (
       <div className={ this.state.console.classes.element }>
         {
-          (this.state.console.lines || []).map((line) => (
-            <Line classes={ this.state.line.classes } content={ line } />
+          (this.state.console.lines || []).map((line, index) => (
+            <Line classes={ this.state.line.classes } content={ line } key={ index } />
           ))
         }
         <Line classes={ this.state.line.classes }
+          key={ 'active' }
           write={ true }
           ps1={
             this.state.ps1
