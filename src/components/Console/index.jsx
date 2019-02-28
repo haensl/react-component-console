@@ -349,7 +349,7 @@ class Console extends React.Component {
   }
 
   componentWillUnmount() {
-    this.stopWriting();
+    (this.state.timeouts || []).forEach((t) => window.clearTimeout(t));
     this._isMounted = false;
   }
 

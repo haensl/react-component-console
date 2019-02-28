@@ -1,3 +1,6 @@
+## 1.1.1
+* Skip updating state on unmount.
+
 ## 1.1.0
 * [#17: Add a key property to each line.](https://github.com/haensl/react-component-console/issues/17)
 

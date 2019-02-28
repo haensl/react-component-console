@@ -61,7 +61,9 @@ class Cursor extends React.Component {
   }
 
   componentWillUnmount() {
-    this.stopBlinking();
+    if (this.state.blinkInterval) {
+      clearInterval(this.state.blinkInterval);
+    }
   }
 
   render() {
