@@ -1,3 +1,6 @@
+## 1.1.2
+* [#19: Update dependencies.](https://github.com/haensl/react-component-console/issues/17)
+
 ## 1.1.1
 * Skip updating state on unmount.
 
