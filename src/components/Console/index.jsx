@@ -5,6 +5,7 @@ import Line from '../Line';
 import defaults from './defaults';
 import math from '../../util/math';
 import array from '../../util/array';
+import object from '../../util/object';
 
 const isClient = typeof window === 'object';
 const initialState = {
@@ -62,8 +63,7 @@ class Console extends React.Component {
           ),
           timeouts: (this.state.timeouts || []).concat([
             window.setTimeout((() =>
-              this.consumeLine(line.slice(1)).then(resolve))
-                .bind(this),
+              this.consumeLine(line.slice(1)).then(resolve)),
               this.getDelay(this.state.console.typing.char) // eslint-disable-line
             )
           ])
@@ -220,16 +220,18 @@ class Console extends React.Component {
   }
 
   async updateFromProps(props, overwrites = {}) {
-    await this.awaitableSetState(
-      merge.all([
-        defaults,
-        this.state,
-        props,
-        overwrites
-      ], {
-        arrayMerge: overwriteArrays
-      })
-    );
+    const newState = merge.all([
+      defaults,
+      this.state,
+      props,
+      overwrites
+    ], {
+      arrayMerge: overwriteArrays
+    });
+
+    if (!object.equals(newState, this.state)) {
+      await this.awaitableSetState(newState);
+    }
   }
 
   async onReceiveLines(nextLines) {
@@ -333,18 +335,21 @@ class Console extends React.Component {
     this.initialize(this.props);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    if (isClient && this.state.initialized) {
-      const currentLines = Array.isArray(this.state.lines)
-        ? [].concat(this.state.lines)
-        : null;
-      this.updateFromProps(nextProps, {
-        lines: currentLines
-      });
-      const lines = this.linesFromProps(nextProps);
-      if (lines) {
-        this.onReceiveLines(lines);
-      }
+  componentDidUpdate(prevProps, prevState) {
+    if (!(isClient && this.state.initialized)
+      || prevProps === this.props) {
+      return;
+    }
+
+    const currentLines = Array.isArray(prevState.lines)
+      ? [].concat(prevState.lines)
+      : null;
+    this.updateFromProps(this.props, {
+      lines: currentLines
+    });
+    const lines = this.linesFromProps(this.props);
+    if (lines) {
+      this.onReceiveLines(lines);
     }
   }
 

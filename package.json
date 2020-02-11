@@ -8,11 +8,14 @@
     "build": "npm run clean && npm run build:module",
     "build:module": "cross-env NODE_ENV=es BABEL_ENV=es rollup -c",
     "clean": "rimraf ./dist",
+    "coverage": "jest --coverage",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
+    "lint:ci": "eslint -c .eslintrc.json --ext .jsx,.js --format junit -o test-results/eslint/results.xml src/**/*",
     "prepare": "npm run build",
     "start": "styleguidist server",
-    "test": "jest --coverage",
-    "tdd": "jest --coverage --watch"
+    "tdd": "jest --watch",
+    "test": "jest --verbose",
+    "test:ci": "jest --runInBand --no-cache --ci --reporters='default' --reporters='jest-junit'"
   },
   "husky": {
     "hooks": {
@@ -37,6 +40,11 @@
     "moduleNameMapper": {
       ".+\\.(css|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
     }
+  },
+  "jest-junit": {
+    "outputDirectory": "test-results/jest",
+    "outputName": "results.xml",
+    "suitName": "react-component-console unit tests"
   },
   "engines": {
     "node": ">=6"
@@ -97,6 +105,7 @@
     "husky": "^3.1.0",
     "jest": "^24.9.0",
     "jest-enzyme": "^7.1.2",
+    "jest-junit": "^10.0.0",
     "jest-transform-stub": "^2.0.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",

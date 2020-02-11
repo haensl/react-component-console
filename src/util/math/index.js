@@ -5,8 +5,8 @@ const randInt = (_min = Number.MIN_SAFE_INTEGER, _max = Number.MAX_SAFE_INTEGER)
 };
 
 const randSign = () =>
-  randInt(0, 2) === 1
-  && 1
+  (randInt(0, 2) === 1
+    && 1)
   || -1;
 
 export default {
