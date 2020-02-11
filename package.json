@@ -4,6 +4,7 @@
   "description": "A console emulator component for React.",
   "main": "dist/index.js",
   "module": "dist/es/index.js",
+  "type": "module",
   "scripts": {
     "build": "npm run clean && npm run build:module",
     "build:module": "cross-env NODE_ENV=es BABEL_ENV=es rollup -c",
