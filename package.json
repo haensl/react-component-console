@@ -3,11 +3,11 @@
   "version": "1.2.0",
   "description": "A console emulator component for React.",
   "main": "dist/index.js",
-  "module": "dist/es/index.js",
+  "module": "dist/esm/index.js",
   "type": "module",
   "scripts": {
     "build": "npm run clean && npm run build:module",
-    "build:module": "cross-env NODE_ENV=es BABEL_ENV=es rollup -c",
+    "build:module": "cross-env rollup -c",
     "clean": "rimraf ./dist",
     "coverage": "jest --coverage",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",

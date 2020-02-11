@@ -4,6 +4,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const babel = require('rollup-plugin-babel');
 const minify = require('rollup-plugin-terser').terser;
 const postcss = require('rollup-plugin-postcss');
+const pkg = require('./package');
 
 const globals = {
   react: 'React',
@@ -11,31 +12,27 @@ const globals = {
   regeneratorRuntime: 'regenerator-runtime'
 };
 
+const copyright = `// ${pkg.homepage} v${pkg.version} Copyright ${(new Date()).getFullYear()} ${pkg.author.name} <${pkg.author.email}>`;
+
 module.exports = [
   {
     input: './src/index.js',
-    output: [
-      {
-        file: 'dist/index.js',
-        format: 'umd',
-        name: 'Console',
-        globals: globals,
-        sourcemap: 'inline'
-      },
-      {
-        file: 'dist/es/index.js',
-        format: 'es',
-        globals: globals,
-        sourcemap: 'inline'
-      }
-    ],
+    output: {
+      file: 'dist/index.js',
+      format: 'umd',
+      banner: copyright,
+      name: pkg.name,
+      globals: globals,
+      sourcemap: 'inline',
+      indent: false
+    },
     external: Object.keys(globals),
     plugins: [
       localResolve(),
       nodeResolve({
         jsnext: true,
         main: true,
-        browser: true,
+        browser: true
       }),
       postcss({
         extensions: [
@@ -52,7 +49,49 @@ module.exports = [
         exclude: [
           'node_modules/**',
           '**/*.test.js'
+        ],
+        runtimeHelpers: true
+      }),
+      minify({
+        sourcemap: true
+      })
+    ]
+  },
+  {
+    input: './src/index.js',
+    output: {
+      file: 'dist/esm/index.js',
+      format: 'esm',
+      sourcemap: 'inline',
+      banner: copyright,
+      indent: false,
+      name: pkg.name
+    },
+    external: Object.keys(globals),
+    plugins: [
+      localResolve(),
+      nodeResolve({
+        jsnext: true,
+        main: true,
+        browser: true
+      }),
+      postcss({
+        extensions: [
+          '.css'
         ]
+      }),
+      commonjs({
+        ignoreGlobal: false,
+        include: [
+          'node_modules/**'
+        ]
+      }),
+      babel({
+        exclude: [
+          'node_modules/**',
+          '**/*.test.js'
+        ],
+        runtimeHelpers: true
       }),
       minify({
         sourcemap: true

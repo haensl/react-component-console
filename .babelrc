@@ -45,17 +45,14 @@
         "@babel/plugin-proposal-class-properties"
       ]
     },
-    "es": {
+    "esm": {
       "presets": [
         [
           "@babel/preset-env",
           {
             "modules": false,
             "targets": {
-              "browsers": [
-                "last 2 versions",
-                "IE > 10"
-              ]
+              "esmodules": true
             }
           }
         ],
