@@ -6,6 +6,7 @@
 coverage/
 __snapshots__/
 test-results/
+src/
 rollup.config.js
 test.setup.js
 webpack.config.js
