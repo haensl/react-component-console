@@ -33,7 +33,7 @@ class Cursor extends React.Component {
         this.setState({
           blink: !this.state.blink
         });
-      }).bind(this), interval)
+      }), interval)
     });
   }
 
@@ -42,17 +42,25 @@ class Cursor extends React.Component {
       clearInterval(this.state.blinkInterval);
     }
 
-    this.setState({
-      blink: false,
-      blinkInterval: null
-    }, callback);
+    if (this.state.blink) {
+      this.setState({
+        blink: false,
+        blinkInterval: null
+      }, callback);
+    } else if (this.state.blinkInterval) {
+      this.setState({
+        blinkInterval: null
+      }, callback);
+    } else if (typeof callback === 'function') {
+      callback();
+    }
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    if (nextProps.char) {
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.char) {
       this.stopBlinking();
     } else if (this.state.blinkInterval === null) {
-      this.blink(nextProps.intervalMs || defaults.intervalMs);
+      this.blink(this.props.intervalMs || defaults.intervalMs);
     }
   }
 
