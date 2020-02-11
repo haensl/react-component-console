@@ -22,7 +22,6 @@ module.exports = [
       banner: copyright,
       name: pkg.name,
       globals: globals,
-      sourcemap: 'inline',
       indent: false
     },
     external: Object.keys(globals),
@@ -61,9 +60,7 @@ module.exports = [
           '.css'
         ]
       }),
-      minify({
-        sourcemap: true
-      })
+      minify()
     ]
   },
   {
@@ -71,7 +68,6 @@ module.exports = [
     output: {
       file: 'dist/esm/index.js',
       format: 'esm',
-      sourcemap: 'inline',
       banner: copyright,
       indent: false,
       name: pkg.name
@@ -111,9 +107,7 @@ module.exports = [
           '@babel/plugin-proposal-class-properties'
         ]
       }),
-      minify({
-        sourcemap: true
-      })
+      minify()
     ]
   }
 ];
