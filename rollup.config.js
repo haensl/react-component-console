@@ -41,7 +41,8 @@ module.exports = [
                 browsers: [
                   'defaults'
                 ]
-              }
+              },
+              modules: false
             }
           ],
           '@babel/preset-react'
