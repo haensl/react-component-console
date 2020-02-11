@@ -5,3 +5,8 @@
 *.setup.js
 coverage/
 __snapshots__/
+test-results/
+rollup.config.js
+test.setup.js
+webpack.config.js
+styleguide.config.js
