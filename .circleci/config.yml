@@ -48,7 +48,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          keys:
+          keys: react-component-console-dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
           command: npm install
