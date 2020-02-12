@@ -222,9 +222,10 @@ jobs:
           command: |
             pwd
             ls -la
-            ls -la test-app/
-            rm -rf test-app/
             cat package.json
+            ls -la test-app/
+            cat test-app/package.json
+            rm -rf test-app/
             ls -la node_modules/
             npm ls react
             npm ls jest
