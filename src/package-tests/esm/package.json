@@ -11,6 +11,11 @@
       "@babel/preset-react"
     ]
   },
+  "jest": {
+    "modulePaths": [
+      "<rootDir>"
+    ]
+  },
   "jest-junit": {
     "outputDirectory": "test-results/jest",
     "outputName": "results.xml",
