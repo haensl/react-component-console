@@ -7,8 +7,7 @@
   "unpkg": "dist/react-component-console.umd.js",
   "type": "module",
   "scripts": {
-    "build": "npm run clean && npm run build:module",
-    "build:module": "rollup -c",
+    "build": "npm run clean && npm i && rollup -c",
     "clean": "rimraf ./dist",
     "coverage": "jest --coverage",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
