@@ -51,7 +51,7 @@ commands:
           keys: react-component-console-dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
-          command: npm install
+          command: npm ci
       - save_cache:
           paths:
             - node_modules
@@ -213,7 +213,7 @@ jobs:
       - run:
           name: install dependencies
           working_directory: /tmp/test-app
-          command: npm install
+          command: npm ci
       - run:
           name: install module
           working_directory: /tmp/test-app
@@ -259,7 +259,7 @@ jobs:
           working_directory: /tmp/esm-test
           command: |
             sudo apt-get install -y tree
-            tree -i node_modules ~/react-component-console
+            tree -I node_modules ~/react-component-console
       - run:
           name: install module
           working_directory: /tmp/esm-test
