@@ -120,6 +120,9 @@ workflows:
       - bundle-test-esm-js:
           requires:
             - bundle
+      - bundle-test-cjs-js:
+          requires:
+            - bundle
       - ensure-versioned-correctly:
           requires:
             - bundle
@@ -190,35 +193,40 @@ jobs:
             - package-lock.json
             - .npmignore
 
-  bundle-test-esm-js:
+  bundle-test-cjs-js:
     docker:
       - image: circleci/node:lts
-    working_directory: /tmp/test-app
     steps:
       - init
       - attach_workspace:
           at: ~/react-component-console
       - create-test-project
       - run:
-          name: copy esm package test
+          name: copy cjs package test
+          working_directory: /tmp/test-app
           command: |
-            cp ~/react-component-console/src/package-tests/esm/* ./
+            cp ~/react-component-console/src/package-tests/cjs/* ./
       - restore_cache:
+          working_directory: /tmp/test-app
           keys:
-            - react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+            - react-component-console-cjs-module-test-dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
+          working_directory: /tmp/test-app
           command: npm install
       - run:
           name: install module
+          working_directory: /tmp/test-app
           command: |
             npm i -S ~/react-component-console
       - save_cache:
+          working_directory: /tmp/test-app
           paths:
             - node_modules
-          key: react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+          key: react-component-console-cjs-module-test-dependencies-{{ checksum "package.json" }}
       - run:
-          name: test esm.js module
+          name: test cjs.js module
+          working_directory: /tmp/test-app
           command: |
             pwd
             ls -la
@@ -231,6 +239,56 @@ jobs:
             npm ls jest
             npm test
       - store_test_results:
+          working_directory: /tmp/test-app
+          path: test-results
+
+  bundle-test-esm-js:
+    docker:
+      - image: circleci/node:lts
+    steps:
+      - init
+      - attach_workspace:
+          at: ~/react-component-console
+      - restore_cache:
+          working_directory: /tmp/test-app
+          keys:
+            - react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: create a test react app
+          working_directory: /tmp
+          command: |
+            npx create-react-app esm-test
+      - run:
+          name: install module
+          working_directory: /tmp/esm-test
+          command: |
+            npm i -S ~/react-component-console
+      - run:
+          name: copy esm package test
+          working_directory: /tmp/esm-test
+          command: |
+            cp ~/react-component-console/src/package-tests/esm/* ./src
+      - save_cache:
+          working_directory: /tmp/esm-test
+          paths:
+            - node_modules
+          key: react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: test cjs.js module
+          working_directory: /tmp/esm-test
+          command: |
+            pwd
+            ls -la
+            cat package.json
+            ls -la test-app/
+            cat test-app/package.json
+            rm -rf test-app/
+            ls -la node_modules/
+            npm ls react
+            npm ls jest
+            npm test
+      - store_test_results:
+          working_directory: /tmp/esm-test
           path: test-results
 
   ensure-versioned-correctly:

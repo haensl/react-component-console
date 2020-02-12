@@ -1,5 +1,5 @@
 {
-  "name": "react-component-console-esm-module-test",
+  "name": "react-component-console-cjs-module-test",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -20,7 +20,7 @@
   "jest-junit": {
     "outputDirectory": "test-results/jest",
     "outputName": "results.xml",
-    "suitName": "react-component-console esm module tests"
+    "suitName": "react-component-console cjs module tests"
   },
   "keywords": [],
   "author": "",
