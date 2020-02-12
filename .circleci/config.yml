@@ -32,15 +32,23 @@ commands:
             echo "export LIVE_VERSION=${LIVE_VERSION}" >> ${BASH_ENV}
             echo "latest published version: ${LIVE_VERSION}"
 
-  setup:
+  extract-versions:
     steps:
-      - checkout
+      - extract-changelog-version
+      - extract-package-json-version
+      - extract-published-version
+
+  init:
+    steps:
       - run:
           name: update npm
           command: sudo npm install -g npm@latest
+
+  prepare-repo:
+    steps:
+      - checkout
       - restore_cache:
           keys:
-            - react-component-console-dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
           command: npm install
@@ -48,17 +56,21 @@ commands:
           paths:
             - node_modules
           key: react-component-console-dependencies-{{ checksum "package.json" }}
-      - extract-changelog-version
+      - extract-versions
 
   create-test-project:
+    parameters:
+      name:
+        description: project name
+        type: string
+        default: test-app
     steps:
       - run:
           working-directory: /tmp
           name: create test application
           command: |
-            mkdir test-app
-            cd test-app
-            npm init -y
+            mkdir << parameters.name >>
+            cd << parameters.name >> && npm init -y
 
   bundle-test-setup:
     steps:
@@ -73,15 +85,13 @@ commands:
 
   package-test-setup:
     steps:
-      - attach_workspace:
-          at: ~/react-component-console
       - create-test-project
       - extract-changelog-version
       - run:
           name: install module
           working-directory: /tmp/test-app
           command: |
-            npm i -S react-component-console@${VERSION}
+            npm i -S react-component-console@${CHANGELOG_VERSION}
 
   package-information:
     steps:
@@ -130,7 +140,8 @@ jobs:
       - image: circleci/node:lts
     working_directory: ~/react-component-console
     steps:
-      - setup
+      - init
+      - prepare-repo
       - run:
           name: create test-results-folder
           command: mkdir -p test-results/eslint
@@ -145,7 +156,8 @@ jobs:
       - image: circleci/node:lts
     working_directory: ~/react-component-console
     steps:
-      - setup
+      - init
+      - prepare-repo
       - run:
           name: unit tests
           command: npm run test:ci
@@ -157,7 +169,8 @@ jobs:
       - image: circleci/node:lts
     working_directory: ~/react-component-console
     steps:
-      - setup
+      - init
+      - prepare-repo
       - run:
           name: bundle
           environment:
@@ -182,14 +195,12 @@ jobs:
       - image: circleci/node:lts
     working_directory: /tmp/test-app
     steps:
-      - bundle-test-setup
+      - init
+      - create-test-project
       - run:
-          name: copy test
+          name: copy esm package test
           command: |
             cp ~/react-component-console/src/package-tests/esm/* ./
-      - run:
-          name: update npm
-          command: sudo npm install -g npm@latest
       - restore_cache:
           keys:
             - react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
@@ -209,6 +220,8 @@ jobs:
           command: |
             pwd
             ls -la
+            ls -la test-app/
+            rm -rf test-app/
             cat package.json
             ls -la node_modules/
             npm ls react
@@ -222,11 +235,10 @@ jobs:
       - image: circleci/node:lts
     working_directory: ~/react-component-console
     steps:
+      - init
       - attach_workspace:
           at: ~/react-component-console
-      - extract-changelog-version
-      - extract-package-json-version
-      - extract-published-version
+      - extract-versions
       - run:
           name: changelog matches package.json
           command: |
@@ -254,11 +266,9 @@ jobs:
       - image: circleci/node:lts
     working_directory: ~/react-component-console
     steps:
+      - init
       - attach_workspace:
           at: ~/react-component-console
-      - run:
-          name: update npm
-          command: sudo npm install -g npm@latest
       - run:
           name: setup npm registry token
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
@@ -271,14 +281,14 @@ jobs:
       - image: circleci/node:lts
     working_directory: /tmp/test-app
     steps:
+      - init
+      - attach_workspace:
+          at: ~/react-component-console
       - package-test-setup
       - run:
           name: copy test
           command: |
             cp ~/react-component-console/src/package-tests/esm/* ./
-      - run:
-          name: update npm
-          command: sudo npm install -g npm@latest
       - restore_cache:
           keys:
             - react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
