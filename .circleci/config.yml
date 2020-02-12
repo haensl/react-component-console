@@ -249,10 +249,11 @@ jobs:
       - init
       - attach_workspace:
           at: ~/react-component-console
+      - extract-versions
       - restore_cache:
-          working_directory: /tmp/test-app
+          working_directory: /tmp/esm-test
           keys:
-            - react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+            - react-component-console-esm-module-test-dependencies-{{ $CHANGELOG_VERSION }}
       - run:
           name: create a test react app
           working_directory: /tmp
@@ -272,7 +273,7 @@ jobs:
           working_directory: /tmp/esm-test
           paths:
             - node_modules
-          key: react-component-console-esm-module-test-dependencies-{{ checksum "package.json" }}
+          key: react-component-console-esm-module-test-dependencies-{{ $CHANGELOG_VERSION }}
       - run:
           name: test cjs.js module
           working_directory: /tmp/esm-test
@@ -280,12 +281,6 @@ jobs:
             pwd
             ls -la
             cat package.json
-            ls -la test-app/
-            cat test-app/package.json
-            rm -rf test-app/
-            ls -la node_modules/
-            npm ls react
-            npm ls jest
             npm test
       - store_test_results:
           working_directory: /tmp/esm-test
