@@ -1,5 +1,8 @@
+## 1.2.0
+* [#22: Migrate to CircleCI.](https://github.com/haensl/react-component-console/issues/22)
+
 ## 1.1.2
-* [#19: Update dependencies.](https://github.com/haensl/react-component-console/issues/17)
+* [#19: Update dependencies.](https://github.com/haensl/react-component-console/issues/19)
 
 ## 1.1.1
 * Skip updating state on unmount.

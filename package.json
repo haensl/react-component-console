@@ -1,26 +1,29 @@
 {
   "name": "react-component-console",
-  "version": "1.1.2",
-  "description": "A console emulator for React.",
-  "main": "dist/index.js",
-  "module": "dist/es/index.js",
+  "version": "1.2.0",
+  "description": "A console emulator component for React.",
+  "main": "dist/react-component-console.cjs.js",
+  "module": "dist/react-component-console.esm.js",
+  "unpkg": "dist/react-component-console.umd.js",
+  "type": "module",
   "scripts": {
     "build": "npm run clean && npm run build:module",
-    "build:module": "cross-env NODE_ENV=es BABEL_ENV=es rollup -c",
+    "build:module": "rollup -c",
     "clean": "rimraf ./dist",
     "coverage": "jest --coverage",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
     "lint:ci": "eslint -c .eslintrc.json --ext .jsx,.js --format junit -o test-results/eslint/results.xml src/**/*",
     "prepare": "npm run build",
     "start": "styleguidist server",
-    "tdd": "jest --watch",
-    "test": "jest --verbose",
+    "tdd": "jest --runInBand --watch",
+    "test": "jest --runInBand",
     "test:ci": "jest --runInBand --no-cache --ci --reporters='default' --reporters='jest-junit'"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint && npm test",
-      "pre-push": "npm run lint && npm test"
+      "pre-push": "npm run lint && npm test",
+      "post-pull": "npm i"
     }
   },
   "jest": {
@@ -39,7 +42,10 @@
     ],
     "moduleNameMapper": {
       ".+\\.(css|scss|png|jpg|ttf|woff|woff2)$": "jest-transform-stub"
-    }
+    },
+    "testPathIgnorePatterns": [
+      "/package-tests/"
+    ]
   },
   "jest-junit": {
     "outputDirectory": "test-results/jest",
@@ -116,6 +122,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.4",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-postcss": "^2.0.6",
     "rollup-plugin-terser": "^5.2.0",
     "style-loader": "^0.23.1",
