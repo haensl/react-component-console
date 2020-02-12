@@ -174,6 +174,7 @@ jobs:
     steps:
       - init
       - prepare-repo
+      - extract-versions
       - run:
           name: generate production bundle
           environment:
@@ -185,10 +186,11 @@ jobs:
           name: pack
           environment:
             NODE_ENV: 'production'
-          command: npm pack
-      - extract-versions
+          command: |
+            npm pack
+            mv react-component-console-${VERSION}.tgz react-component-console.tgz
       - store_artifacts:
-          path: react-component-console-${VERSION}.tgz
+          path: react-component-console.tgz
       - persist_to_workspace:
           root: ./
           paths:
@@ -200,7 +202,7 @@ jobs:
             - package.json
             - package-lock.json
             - .npmignore
-            - react-component-console-${VERSION}.tgz
+            - react-component-console.tgz
 
   bundle-test-cjs-js:
     docker:
@@ -228,7 +230,7 @@ jobs:
           name: install module
           working_directory: /tmp/test-app
           command: |
-            npm i -S ~/react-component-console/react-component-console-${VERSION}.tgz
+            npm i -S ~/react-component-console/react-component-console.tgz
       - save_cache:
           working_directory: /tmp/test-app
           paths:
@@ -275,7 +277,7 @@ jobs:
           name: install module
           working_directory: /tmp/esm-test
           command: |
-            npm i -S ~/react-component-console/react-component-console-${VERSION}.tgz
+            npm i -S ~/react-component-console/react-component-console.tgz
       - run:
           name: copy esm package test
           working_directory: /tmp/esm-test
