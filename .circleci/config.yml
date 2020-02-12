@@ -256,7 +256,8 @@ jobs:
             npx create-react-app esm-test
       - run:
           name: inspect workspace
-          run: |
+          working_directory: /tmp/esm-test
+          command: |
             sudo apt-get install -y tree
             tree -i node_modules ~/react-component-console
       - run:
