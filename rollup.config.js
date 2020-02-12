@@ -21,7 +21,7 @@ module.exports = [
     output: {
       esModule: false,
       exports: 'named',
-      file: `dist/${pkg.name}.umd.js`,
+      file: pkg.unpkg,
       format: 'umd',
       banner: copyright,
       name: pkg.name,
@@ -69,20 +69,11 @@ module.exports = [
     input: './src/index.js',
     output: [
       {
-        file: `dist/${pkg.name}.esm.js`,
+        file: pkg.module,
         format: 'esm',
         banner: copyright,
         indent: false,
         name: pkg.name,
-        sourcemap: true
-      },
-      {
-        file: `dist/${pkg.name}.cjs.js`,
-        format: 'cjs',
-        name: pkg.name,
-        indent: false,
-        banner: copyright,
-        exports: 'named',
         sourcemap: true
       }
     ],
@@ -122,8 +113,59 @@ module.exports = [
         extensions: [
           '.css'
         ]
+      })
+    ]
+  },
+  {
+    input: './src/index.js',
+    output: [
+      {
+        file: pkg.main,
+        format: 'cjs',
+        name: pkg.name,
+        indent: false,
+        banner: copyright,
+        exports: 'named',
+        sourcemap: true
+      }
+    ],
+    plugins: [
+      external({
+        includeDependencies: true
       }),
-      minify()
+      babel({
+        babelrc: false,
+        exclude: [
+          'node_modules/**',
+          '**/*.test.js'
+        ],
+        runtimeHelpers: true,
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              modules: false,
+              targets: {
+                node: true
+              }
+            }
+          ],
+          '@babel/preset-react'
+        ],
+        plugins: [
+          '@babel/plugin-proposal-class-properties'
+        ]
+      }),
+      commonJS({
+        include: 'node_modules/**'
+      }),
+      localResolve(),
+      nodeResolve(),
+      postcss({
+        extensions: [
+          '.css'
+        ]
+      })
     ]
   }
 ];
