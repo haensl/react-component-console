@@ -240,15 +240,6 @@ jobs:
           name: test cjs.js module
           working_directory: /tmp/test-app
           command: |
-            pwd
-            ls -la
-            cat package.json
-            ls -la test-app/
-            cat test-app/package.json
-            rm -rf test-app/
-            ls -la node_modules/
-            npm ls react
-            npm ls jest
             npm test
       - store_test_results:
           working_directory: /tmp/test-app
@@ -287,10 +278,7 @@ jobs:
           name: test esm.js module
           working_directory: /tmp/esm-test
           command: |
-            pwd
-            ls -la
-            cat package.json
-            CI=true npm test
+            npm test
       - store_test_results:
           working_directory: /tmp/esm-test
           path: test-results
