@@ -196,6 +196,8 @@ jobs:
     working_directory: /tmp/test-app
     steps:
       - init
+      - attach_workspace:
+          at: ~/react-component-console
       - create-test-project
       - run:
           name: copy esm package test
