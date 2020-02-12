@@ -2,8 +2,8 @@
   "name": "react-component-console",
   "version": "1.2.0",
   "description": "A console emulator component for React.",
-  "main": "dist/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/react-component-console.umd.js",
+  "module": "dist/react-component-console.esm.js",
   "type": "module",
   "scripts": {
     "build": "npm run clean && npm run build:module",

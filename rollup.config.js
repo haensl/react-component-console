@@ -17,7 +17,7 @@ module.exports = [
   {
     input: './src/index.js',
     output: {
-      file: 'dist/index.js',
+      file: `dist/${pkg.name}.umd.js`,
       format: 'umd',
       banner: copyright,
       name: pkg.name,
@@ -40,9 +40,9 @@ module.exports = [
               targets: {
                 browsers: [
                   'defaults'
-                ]
-              },
-              modules: false
+                ],
+                node: true
+              }
             }
           ],
           '@babel/preset-react'
@@ -67,7 +67,7 @@ module.exports = [
   {
     input: './src/index.js',
     output: {
-      file: 'dist/esm/index.js',
+      file: `dist/${pkg.name}.esm.js`,
       format: 'esm',
       banner: copyright,
       indent: false,
