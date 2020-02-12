@@ -51,7 +51,7 @@ commands:
           keys: react-component-console-dependencies-{{ checksum "package.json" }}
       - run:
           name: install dependencies
-          command: npm ci
+          command: npm i
       - save_cache:
           paths:
             - node_modules
@@ -167,8 +167,6 @@ jobs:
       - extract-versions
       - run:
           name: generate production bundle
-          environment:
-            NODE_ENV: 'production'
           command: npm run build
       - store_artifacts:
           path: dist

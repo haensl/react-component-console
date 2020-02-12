@@ -7,12 +7,11 @@
   "unpkg": "dist/react-component-console.umd.js",
   "type": "module",
   "scripts": {
-    "build": "npm run clean && npm i && rollup -c",
+    "build": "npm run clean && NODE_ENV=production rollup -c",
     "clean": "rimraf ./dist",
     "coverage": "jest --coverage",
     "lint": "eslint -c .eslintrc.json --ext .jsx,.js src/**/*",
     "lint:ci": "eslint -c .eslintrc.json --ext .jsx,.js --format junit -o test-results/eslint/results.xml src/**/*",
-    "prepare": "npm run build",
     "start": "styleguidist server",
     "tdd": "jest --runInBand --watch",
     "test": "jest --runInBand",
