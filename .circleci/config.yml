@@ -265,13 +265,13 @@ jobs:
           command: |
             cp ~/react-component-console/src/package-tests/esm/* ./src
       - run:
-          name: test cjs.js module
+          name: test esm.js module
           working_directory: /tmp/esm-test
           command: |
             pwd
             ls -la
             cat package.json
-            npm test
+            CI=true npm test
       - store_test_results:
           working_directory: /tmp/esm-test
           path: test-results
