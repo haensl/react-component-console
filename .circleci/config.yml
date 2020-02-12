@@ -207,6 +207,8 @@ jobs:
       - run:
           name: test esm.js module
           command: |
+            pwd
+            ls -la
             cat package.json
             ls -la node_modules/
             npm test
