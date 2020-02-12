@@ -60,7 +60,7 @@ commands:
 
   create-test-project:
     parameters:
-      name:
+      project_name:
         description: project name
         type: string
         default: test-app
@@ -69,8 +69,8 @@ commands:
           working-directory: /tmp
           name: create test application
           command: |
-            mkdir << parameters.name >>
-            cd << parameters.name >> && npm init -y
+            mkdir << parameters.project_name >>
+            cd << parameters.project_name >> && npm init -y
 
   bundle-test-setup:
     steps:
