@@ -211,6 +211,8 @@ jobs:
             ls -la
             cat package.json
             ls -la node_modules/
+            npm ls react
+            npm ls jest
             npm test
       - store_test_results:
           path: test-results
