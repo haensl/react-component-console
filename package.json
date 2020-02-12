@@ -2,8 +2,9 @@
   "name": "react-component-console",
   "version": "1.2.0",
   "description": "A console emulator component for React.",
-  "main": "dist/react-component-console.umd.js",
+  "main": "dist/react-component-console.cjs.js",
   "module": "dist/react-component-console.esm.js",
+  "unpkg": "dist/react-component-console.umd.js",
   "type": "module",
   "scripts": {
     "build": "npm run clean && npm run build:module",
@@ -121,6 +122,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-node-resolve": "^4.2.4",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-postcss": "^2.0.6",
     "rollup-plugin-terser": "^5.2.0",
     "style-loader": "^0.23.1",
