@@ -249,11 +249,6 @@ jobs:
       - init
       - attach_workspace:
           at: ~/react-component-console
-      - extract-versions
-      - restore_cache:
-          working_directory: /tmp/esm-test
-          keys:
-            - react-component-console-esm-module-test-dependencies-{{ $CHANGELOG_VERSION }}
       - run:
           name: create a test react app
           working_directory: /tmp
@@ -269,11 +264,6 @@ jobs:
           working_directory: /tmp/esm-test
           command: |
             cp ~/react-component-console/src/package-tests/esm/* ./src
-      - save_cache:
-          working_directory: /tmp/esm-test
-          paths:
-            - node_modules
-          key: react-component-console-esm-module-test-dependencies-{{ $CHANGELOG_VERSION }}
       - run:
           name: test cjs.js module
           working_directory: /tmp/esm-test
