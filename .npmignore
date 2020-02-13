@@ -1,12 +1,13 @@
+__snapshots__/
+coverage/
+src/
+test-results/
 .*
 *.md
 *.test.js
 *.config.js
 *.setup.js
-coverage/
-__snapshots__/
-test-results/
-src/
+*.tgz
 rollup.config.js
 test.setup.js
 webpack.config.js
