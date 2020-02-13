@@ -70,7 +70,8 @@ commands:
           name: create test application
           command: |
             mkdir << parameters.project_name >>
-            cd << parameters.project_name >> && npm init -y
+            npm init -y
+            ls -la
 
   bundle-test-setup:
     steps:
