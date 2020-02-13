@@ -1,5 +1,6 @@
 ## 1.2.1
 * [#25: Don't publish tarball.](https://github.com/haensl/react-component-console/issues/25)
+* Remove obsolete travis configuration.
 
 ## 1.2.0
 * [#22: Migrate to CircleCI.](https://github.com/haensl/react-component-console/issues/22)
