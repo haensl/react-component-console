@@ -1,3 +1,7 @@
+## 1.2.3
+* [#33: Update dependencies.](https://github.com/haensl/react-component-console/issues/33)
+* Use `npm` when creating test react apps.
+
 ## 1.2.2
 * [#28: Update dependencies and fix CJS release.](https://github.com/haensl/react-component-console/issues/28)
 
