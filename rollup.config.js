@@ -1,4 +1,4 @@
-const nodeResolve = require('@rollup/plugin-node-resolve');
+const nodeResolve = require('@rollup/plugin-node-resolve').default;
 const localResolve = require('@haensl/rollup-plugin-local-resolve');
 const babel = require('rollup-plugin-babel');
 const commonJS = require('@rollup/plugin-commonjs');
