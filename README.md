@@ -1,11 +1,10 @@
-# react-component-console
+# react-component-console [![CircleCI](https://circleci.com/gh/haensl/react-component-console.svg?style=svg)](https://circleci.com/gh/haensl/react-component-console)
+
 A console emulator component for React.
 
 [![NPM](https://nodei.co/npm/react-component-console.png?downloads=true)](https://nodei.co/npm/react-component-console/)
 
 [![npm version](https://badge.fury.io/js/react-component-console.svg)](http://badge.fury.io/js/react-component-console)
-
-[![CircleCI](https://circleci.com/gh/haensl/react-component-console.svg?style=svg)](https://circleci.com/gh/haensl/react-component-console)
 
 ## Features
 

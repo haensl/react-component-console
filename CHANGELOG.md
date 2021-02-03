@@ -1,3 +1,7 @@
+## 1.3.0
+* [#43: Automate Github release publishing.](https://github.com/haensl/react-component-console/issues/43)
+* Add dependabot updates.
+
 ## 1.2.5
 * [#40: Update dependencies.](https://github.com/haensl/react-component-console/issues/40)
 

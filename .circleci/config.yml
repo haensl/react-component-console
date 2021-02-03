@@ -126,6 +126,9 @@ workflows:
       - package-test-esm-js:
           requires:
             - publish
+      - publish-github-release:
+          requires:
+            - package-test-esm-js
 
 jobs:
   lint:
@@ -340,3 +343,19 @@ jobs:
           path: test-results
       - package-information
 
+  publish-github-release:
+    docker:
+      - image: cibuilds/github
+    steps:
+      - attach_workspace:
+          at: ~/react-component-console
+      - extract-changelog-version
+      - run:
+          name: publish github release
+          working_directory: ~/react-component-console
+          command: |
+            cp ./react-component-console.tgz ./react-component-console-${VERSION}.tgz
+            CHANGES=$(awk "/## ${VERSION}/,/^$/" CHANGELOG.md)
+            echo "Publishing release v${VERSION} to Github.\nChanges:"
+            echo $CHANGES
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete -n "v${VERSION}" -b "${CHANGES}" "v${VERSION}" ./react-component-console-${VERSION}.tgz
