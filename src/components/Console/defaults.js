@@ -2,7 +2,7 @@ import { defaults as ps1Defaults } from '../PS1';
 import { defaults as lineDefaults } from '../Line';
 import { defaults as cursorDefaults } from '../Cursor';
 
-export default {
+const defaults = {
   console: {
     append: false,
     classes: {
@@ -29,3 +29,5 @@ export default {
   ps1: ps1Defaults,
   cursor: cursorDefaults
 };
+
+export default defaults;

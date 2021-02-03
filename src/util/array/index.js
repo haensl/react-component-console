@@ -47,8 +47,10 @@ const isSubset = (subset, superset, index = -1) => {
   return false;
 };
 
-export default {
+const util = {
   equals,
   isSubset
 };
+
+export default util;
 

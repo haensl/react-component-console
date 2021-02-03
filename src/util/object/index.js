@@ -49,6 +49,8 @@ export const equals = (a, b) => {
     .reduce((objectsEqual, propEqual) => objectsEqual && propEqual, true);
 };
 
-export default {
+const util = {
   equals
 };
+
+export default util;

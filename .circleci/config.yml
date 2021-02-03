@@ -213,7 +213,7 @@ jobs:
       - run:
           name: install dependencies
           working_directory: /tmp/test-app
-          command: npm ci
+          command: npm i
       - run:
           name: install module
           working_directory: /tmp/test-app

@@ -9,7 +9,9 @@ const randSign = () =>
     && 1)
   || -1;
 
-export default {
+const util = {
   randInt,
   randSign
 };
+
+export default util;
