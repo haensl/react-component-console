@@ -28,7 +28,7 @@ commands:
           name: extract latest published version
           working_directory: ~/react-component-console
           command: |
-            LIVE_VERSION=$(npm show @haensl/react-component-console version)
+            LIVE_VERSION=$(npm show @haensl/react-component-console version || '0.0.0')
             echo "export LIVE_VERSION=${LIVE_VERSION}" >> ${BASH_ENV}
             echo "latest published version: ${LIVE_VERSION}"
 
