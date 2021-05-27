@@ -28,7 +28,7 @@ commands:
           name: extract latest published version
           working_directory: ~/react-component-console
           command: |
-            LIVE_VERSION=$(npm show react-component-console version)
+            LIVE_VERSION=$(npm show @haensl/react-component-console version)
             echo "export LIVE_VERSION=${LIVE_VERSION}" >> ${BASH_ENV}
             echo "latest published version: ${LIVE_VERSION}"
 
@@ -91,8 +91,8 @@ commands:
       - run:
           name: gather bundle information
           command: |
-            npm info react-component-console@${VERSION} > ./bundle.info
-            tree -s node_modules/react-component-console >> ./bundle.info
+            npm info @haensl/react-component-console@${VERSION} > ./bundle.info
+            tree -s node_modules/@haensl/react-component-console >> ./bundle.info
       - store_artifacts:
           path: bundle.info
 
@@ -179,9 +179,9 @@ jobs:
             NODE_ENV: 'production'
           command: |
             npm pack
-            mv react-component-console-${VERSION}.tgz react-component-console.tgz
+            mv haensl-react-component-console-${VERSION}.tgz haensl-react-component-console.tgz
       - store_artifacts:
-          path: react-component-console.tgz
+          path: haensl-react-component-console.tgz
       - persist_to_workspace:
           root: ./
           paths:
@@ -193,7 +193,7 @@ jobs:
             - package.json
             - package-lock.json
             - .npmignore
-            - react-component-console.tgz
+            - haensl-react-component-console.tgz
 
   bundle-test-cjs-js:
     docker:
@@ -221,7 +221,7 @@ jobs:
           name: install module
           working_directory: /tmp/test-app
           command: |
-            npm i -S ~/react-component-console/react-component-console.tgz
+            npm i -S ~/react-component-console/haensl-react-component-console.tgz
       - save_cache:
           working_directory: /tmp/test-app
           paths:
@@ -253,7 +253,7 @@ jobs:
           name: install module
           working_directory: /tmp/esm-test
           command: |
-            npm i -S ~/react-component-console/react-component-console.tgz
+            npm i -S ~/react-component-console/haensl-react-component-console.tgz
       - run:
           name: copy esm package test
           working_directory: /tmp/esm-test
@@ -327,7 +327,7 @@ jobs:
           name: install module
           working_directory: /tmp/esm-test
           command: |
-            npm i -S react-component-console
+            npm i -S @haensl/react-component-console
       - run:
           name: copy esm package test
           working_directory: /tmp/esm-test
@@ -354,8 +354,8 @@ jobs:
           name: publish github release
           working_directory: ~/react-component-console
           command: |
-            cp ./react-component-console.tgz ./react-component-console-${VERSION}.tgz
+            cp ./haensl-react-component-console.tgz ./haensl-react-component-console-${VERSION}.tgz
             CHANGES=$(awk "/## ${VERSION}/,/^$/" CHANGELOG.md)
             echo "Publishing release v${VERSION} to Github.\nChanges:"
             echo $CHANGES
-            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete -n "v${VERSION}" -b "${CHANGES}" "v${VERSION}" ./react-component-console-${VERSION}.tgz
+            ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete -n "v${VERSION}" -b "${CHANGES}" "v${VERSION}" ./haensl-react-component-console-${VERSION}.tgz

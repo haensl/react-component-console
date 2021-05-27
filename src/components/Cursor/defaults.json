@@ -1,0 +1,8 @@
+{
+  "classes": {
+    "blink": "Console-Cursor--blink",
+    "element": "Console-Cursor",
+    "write": "Console-Cursor--write"
+  },
+  "intervalMs": 400
+}

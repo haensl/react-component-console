@@ -1,6 +1,6 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
-import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
+import { mount, shallow } from 'enzyme';
 import Cursor, { defaults } from './';
 
 jest.useFakeTimers();
@@ -10,8 +10,7 @@ describe('Cursor', () => {
     let tree;
 
     beforeEach(() => {
-      tree = renderer.create(<Cursor />)
-        .toJSON();
+      tree = shallow(<Cursor />);
     });
 
     it('renders as expeted', () => {
@@ -19,7 +18,7 @@ describe('Cursor', () => {
     });
 
     it('adds the default element class', () => {
-      expect(tree.props.className).toEqual(defaults.classes.element);
+      expect(tree.props().className).toEqual(defaults.classes.element);
     });
   });
 
@@ -27,8 +26,7 @@ describe('Cursor', () => {
     let tree;
 
     beforeEach(() => {
-      tree = renderer.create(<Cursor char="t" />)
-        .toJSON();
+      tree = mount(<Cursor char="t" />);
     });
 
     it('renders as expected', () => {
@@ -36,15 +34,15 @@ describe('Cursor', () => {
     });
 
     it('writes the char', () => {
-      expect(tree.children.includes('t')).toBe(true);
+      expect(tree.children().first().text()).toEqual('t');
     });
 
     it('adds the default write class', () => {
-      expect(tree.props.className).toMatch(new RegExp(`${defaults.classes.write}`));
+      expect(tree.children().first().hasClass(defaults.classes.write)).toBe(true);
     });
 
     it('adds the default element class', () => {
-      expect(tree.props.className).toMatch(new RegExp(`${defaults.classes.element}`));
+      expect(tree.children().first().hasClass(defaults.classes.element)).toBe(true);
     });
   });
 
@@ -52,9 +50,9 @@ describe('Cursor', () => {
     let tree;
 
     beforeEach(() => {
-      tree = renderer.create(<Cursor classes={{
+      tree = shallow(<Cursor classes={{
         element: 'test-element'
-      }} />).toJSON();
+      }} />);
     });
 
     it('renders as expected', () => {
@@ -62,7 +60,7 @@ describe('Cursor', () => {
     });
 
     it('adds the test-element class to the element', () => {
-      expect(tree.props.className).toEqual('test-element');
+      expect(tree.props().className).toEqual('test-element');
     });
   });
 
@@ -72,30 +70,26 @@ describe('Cursor', () => {
     describe('after the default interval has passed', () => {
       beforeEach(() => {
         component = mount(<Cursor />);
-        jest.runTimersToTime(defaults.intervalMs + 1);
-        component.update();
+        act(() => {
+          jest.advanceTimersByTime(defaults.intervalMs + 1);
+          component.update();
+        });
       });
 
       it('adds the blink class', () => {
         expect(component.find('span').first().hasClass(defaults.classes.blink)).toBe(true);
       });
 
-      it('sets the blink state to true', () => {
-        expect(component.state('blink')).toBe(true);
-      });
-
       describe('after the default interval has passed a second time', () => {
         beforeEach(() => {
-          jest.runTimersToTime(defaults.intervalMs + 1);
-          component.update();
+          act(() => {
+            jest.advanceTimersByTime(defaults.intervalMs + 1);
+            component.update();
+          });
         });
 
         it('removes the blink class', () => {
           expect(component.find('span').first().hasClass(defaults.classes.blink)).toBe(false);
-        });
-
-        it('sets the blink state to true', () => {
-          expect(component.state('blink')).toBe(false);
         });
       });
     });
