@@ -1,4 +1,5 @@
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 import Console from './';
 import defaults from './defaults';
@@ -22,17 +23,23 @@ describe('Console', () => {
     });
 
     it('renders as expected', () => {
-      tree.update();
+      act(() => {
+        tree.update();
+      });
       expect(tree).toMatchSnapshot();
     });
 
     it('adds the default class to the element', () => {
-      tree.update();
+      act(() => {
+        tree.update();
+      });
       expect(tree.hasClass(defaults.console.classes.element)).toBe(true);
     });
 
     it('renders the Line component', () => {
-      tree.update();
+      act(() => {
+        tree.update();
+      });
       expect(tree.find('Line').length).toBe(1);
     });
   });
@@ -58,28 +65,36 @@ describe('Console', () => {
       });
 
       it('renders as expected', () => {
-        component.update();
+        act(() => {
+          component.update();
+        });
         expect(component).toMatchSnapshot();
       });
 
       describe('Cursor', () => {
         it('writes the first character', () => {
-          component.update();
+          act(() => {
+            component.update();
+          });
           expect(component.find('Cursor').prop('char')).toEqual('t');
         });
       });
 
       describe('Line', () => {
         it('writes the first character', () => {
-          component.update();
+          act(() => {
+            component.update();
+          });
           expect(component.find('Line').prop('content')).toEqual('t');
         });
       });
 
       describe('after some time', () => {
         beforeEach(() => {
-          jest.advanceTimersByTime(maxCharTimeout);
-          component.update();
+          act(() => {
+            jest.advanceTimersByTime(maxCharTimeout);
+            component.update();
+          });
         });
 
         it('renders as expected', () => {
@@ -100,10 +115,12 @@ describe('Console', () => {
 
         describe('after the whole line has been written', () => {
           beforeEach(() => {
-            for (let i = 0; i < line.length; i++) {
-              jest.advanceTimersByTime(maxCharTimeout);
-              component.update();
-            }
+            act(() => {
+              for (let i = 0; i < line.length; i++) {
+                jest.advanceTimersByTime(maxCharTimeout);
+                component.update();
+              }
+            });
           });
 
           it('renders as expected', () => {
@@ -124,10 +141,12 @@ describe('Console', () => {
 
           describe('onFinishWritingLines', () => {
             beforeEach(async () => {
-              await waitForAsync();
-              jest.runOnlyPendingTimers();
-              await waitForAsync();
-              jest.runOnlyPendingTimers();
+              await act(async () => {
+                await waitForAsync();
+                jest.runOnlyPendingTimers();
+                await waitForAsync();
+                jest.runOnlyPendingTimers();
+              });
             });
 
             it('calls the onFinishWritingLines callback', () => {
@@ -137,8 +156,10 @@ describe('Console', () => {
 
           describe('onFinishWritingLine', () => {
             beforeEach(async () => {
-              await waitForAsync();
-              jest.runOnlyPendingTimers();
+              await act(async () => {
+                await waitForAsync();
+                jest.runOnlyPendingTimers();
+              });
             });
 
             it('calls the onFinishWritingLines callback', () => {
@@ -172,13 +193,17 @@ describe('Console', () => {
             onFinishWritingLines={ linesCallback }
           />
         );
-        await waitForAsync();
+        await act(async () => {
+          await waitForAsync();
+        });
       });
 
       describe('first line', () => {
         beforeEach(() => {
-          line = lines[0];
-          component.update();
+          act(() => {
+            line = lines[0];
+            component.update();
+          });
         });
 
         it('renders as expected', () => {
@@ -199,8 +224,10 @@ describe('Console', () => {
 
         describe('after some time', () => {
           beforeEach(() => {
-            jest.advanceTimersByTime(maxCharTimeout);
-            component.update();
+            act(() => {
+              jest.advanceTimersByTime(maxCharTimeout);
+              component.update();
+            });
           });
 
           it('renders as expected', () => {
@@ -221,10 +248,12 @@ describe('Console', () => {
 
           describe('after the whole line has been written', () => {
             beforeEach(() => {
-              for (let i = 2; i < line.length; i++) {
-                jest.advanceTimersByTime(maxCharTimeout);
-                component.update();
-              }
+              act(() => {
+                for (let i = 2; i < line.length; i++) {
+                  jest.advanceTimersByTime(maxCharTimeout);
+                  component.update();
+                }
+              });
             });
 
             it('renders as expected', () => {
@@ -245,11 +274,13 @@ describe('Console', () => {
 
             describe('second line', () => {
               beforeEach(async () => {
-                line = lines[1];
-                await waitForAsync();
-                jest.advanceTimersByTime(maxNewlineTimeout);
-                await waitForAsync();
-                component.update();
+                await act(async () => {
+                  line = lines[1];
+                  await waitForAsync();
+                  jest.advanceTimersByTime(maxNewlineTimeout);
+                  await waitForAsync();
+                  component.update();
+                });
               });
 
               describe('onFinishWritingLine', () => {
@@ -276,8 +307,10 @@ describe('Console', () => {
 
               describe('after some time', () => {
                 beforeEach(() => {
-                  jest.advanceTimersByTime(maxCharTimeout);
-                  component.update();
+                  act(() => {
+                    jest.advanceTimersByTime(maxCharTimeout);
+                    component.update();
+                  });
                 });
 
                 it('renders as expected', () => {
@@ -298,10 +331,12 @@ describe('Console', () => {
 
                 describe('after the whole second line has been written', () => {
                   beforeEach(() => {
-                    for (let i = 2; i < line.length; i++) {
-                      jest.advanceTimersByTime(maxCharTimeout);
-                      component.update();
-                    }
+                    act(() => {
+                      for (let i = 2; i < line.length; i++) {
+                        jest.advanceTimersByTime(maxCharTimeout);
+                        component.update();
+                      }
+                    });
                   });
 
                   it('renders as expected', () => {
@@ -322,8 +357,10 @@ describe('Console', () => {
 
                   describe('onFinishWritingLine', () => {
                     beforeEach(async () => {
-                      await waitForAsync();
-                      jest.runOnlyPendingTimers();
+                      await act(async () => {
+                        await waitForAsync();
+                        jest.runOnlyPendingTimers();
+                      });
                     });
 
                     it('calls the onFinishWritingLine callback the second time', () => {
@@ -333,10 +370,12 @@ describe('Console', () => {
 
                   describe('onFinishWritingLines', () => {
                     beforeEach(async () => {
-                      await waitForAsync();
-                      jest.runOnlyPendingTimers();
-                      await waitForAsync();
-                      jest.runOnlyPendingTimers();
+                      await act(async () => {
+                        await waitForAsync();
+                        jest.runOnlyPendingTimers();
+                        await waitForAsync();
+                        jest.runOnlyPendingTimers();
+                      });
                     });
 
                     it('calls the onFinishWritingLines callback', () => {

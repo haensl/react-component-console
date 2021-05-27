@@ -1,94 +1,74 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import _defaults from './defaults';
 import './Cursor.css';
 
-export const defaults = {
-  classes: {
-    blink: 'Console-Cursor--blink',
-    element: 'Console-Cursor',
-    write: 'Console-Cursor--write'
-  },
-  intervalMs: 400
-};
+export const defaults = _defaults;
 
-class Cursor extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      blink: false,
-      blinkInterval: null
-    };
-  }
+const Cursor = ({
+  char,
+  classes = defaults.classes,
+  intervalMs = defaults.intervalMs
+}) => {
+  const [blinkInterval, setBlinkInterval] = useState(null);
+  const [renderBlink, setRenderBlink] = useState(false);
 
-  get isBlinking() {
-    return !!this.state.blinkInteval;
-  }
+  const isBlinking = useMemo(
+    () => !!blinkInterval,
+    [ blinkInterval]
+  );
 
-  blink(interval) {
-    if (this.isBlinking) {
-      return this.stopBlinking(this.blink.bind(this));
+  const blink = useMemo(() => () => {
+    if (isBlinking) {
+      return;
     }
 
-    this.setState({
-      blinkInterval: setInterval((() => {
-        this.setState({
-          blink: !this.state.blink
-        });
-      }), interval)
-    });
-  }
-
-  stopBlinking(callback) {
-    if (this.state.blinkInterval) {
-      clearInterval(this.state.blinkInterval);
-    }
-
-    if (this.state.blink) {
-      this.setState({
-        blink: false,
-        blinkInterval: null
-      }, callback);
-    } else if (this.state.blinkInterval) {
-      this.setState({
-        blinkInterval: null
-      }, callback);
-    } else if (typeof callback === 'function') {
-      callback();
-    }
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.props.char) {
-      this.stopBlinking();
-    } else if (this.state.blinkInterval === null) {
-      this.blink(this.props.intervalMs || defaults.intervalMs);
-    }
-  }
-
-  componentDidMount() {
-    this.blink(this.props.intervalMs || defaults.intervalMs);
-  }
-
-  componentWillUnmount() {
-    if (this.state.blinkInterval) {
-      clearInterval(this.state.blinkInterval);
-    }
-  }
-
-  render() {
-    const classes = Object.assign({}, defaults.classes, this.props.classes);
-    let classesString = classes.element;
-    if (this.props.char) {
-      classesString = `${classesString} ${classes.write}`;
-    } else if (this.state.blink) {
-      classesString = `${classesString} ${classes.blink}`;
-    }
-
-    return (
-      <span className={ classesString }>{
-        this.props.char || ' '
-      }</span>
+    setBlinkInterval(
+      setInterval(() => {
+        setRenderBlink(!renderBlink);
+      }, intervalMs)
     );
-  }
-}
+  }, [
+    intervalMs,
+    isBlinking,
+    renderBlink
+  ]);
+
+  const stopBlinking = useMemo(() => () => {
+    if (blinkInterval) {
+      clearInterval(blinkInterval);
+      setBlinkInterval(null);
+    }
+  }, [blinkInterval]);
+
+  useEffect(() => {
+    if (typeof char === 'string' && char.length) {
+      stopBlinking();
+    } else {
+      blink();
+      return stopBlinking;
+    }
+  }, [blink, char, stopBlinking]);
+
+  const classesString = useMemo(() => {
+    const joinedClasses = {
+      ...defaults.classes,
+      ...classes
+    };
+
+    if (char) {
+      return `${joinedClasses.element} ${joinedClasses.write}`;
+    } else if (renderBlink) {
+      return `${joinedClasses.element} ${joinedClasses.blink}`;
+    }
+
+    return classes.element;
+  }, [char, classes, renderBlink]);
+
+  return (
+    <span className={ classesString }>{
+      char || ' '
+    }</span>
+  );
+};
 
 export default Cursor;
