@@ -5,6 +5,7 @@ const commonJS = require('@rollup/plugin-commonjs');
 const external = require('rollup-plugin-peer-deps-external');
 const minify = require('rollup-plugin-terser').terser;
 const postcss = require('rollup-plugin-postcss');
+const json = require('@rollup/plugin-json');
 const pkg = require('./package');
 
 const globals = {
@@ -29,6 +30,7 @@ module.exports = [
       indent: false
     },
     plugins: [
+      json(),
       external({
         includeDependencies: true
       }),
@@ -78,6 +80,7 @@ module.exports = [
       }
     ],
     plugins: [
+      json(),
       external({
         includeDependencies: true
       }),
@@ -130,6 +133,7 @@ module.exports = [
       }
     ],
     plugins: [
+      json(),
       external({
         includeDependencies: true
       }),
