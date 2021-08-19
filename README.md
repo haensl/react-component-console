@@ -2,9 +2,9 @@
 
 A console emulator component for React.
 
-[![NPM](https://nodei.co/npm/react-component-console.png?downloads=true)](https://nodei.co/npm/react-component-console/)
+[![NPM](https://nodei.co/npm/@haensl/%2Freact-component-console.png?downloads=true)](https://nodei.co/npm/@haensl%2Freact-component-console/)
 
-[![npm version](https://badge.fury.io/js/react-component-console.svg)](http://badge.fury.io/js/react-component-console)
+[![npm version](https://badge.fury.io/js/@haensl%2Freact-component-console.svg)](http://badge.fury.io/js/@haensl%2Freact-component-console)
 
 ## Features
 
@@ -16,18 +16,18 @@ A console emulator component for React.
 1. Install the `react-component-console` dependency
 
 ```bash
-npm i -S react-component-console
+npm i -S @haensl/react-component-console
 ```
 
 or
 
 ```bash
-yarn add react-component-console
+yarn add @haensl/react-component-console
 ```
 
 2. Use it in your React app
 ```javascript
-import Console from 'react-component-console';
+import Console from '@haensl/react-component-console';
 // ...
 
 class MyComponent extends React.Component {
