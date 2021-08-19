@@ -85,13 +85,14 @@ commands:
 
   package-information:
     steps:
+      - extract-versions
       - run:
           name: install tree
           command: sudo apt-get -y install tree
       - run:
           name: gather bundle information
           command: |
-            npm info @haensl/react-component-console@${VERSION} > ./bundle.info
+            npm info "@haensl/react-component-console@${VERSION}" > ./bundle.info
             tree -s node_modules/@haensl/react-component-console >> ./bundle.info
       - store_artifacts:
           path: bundle.info
