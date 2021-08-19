@@ -309,7 +309,7 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
       - run:
           name: publish node module
-          command: npm publish
+          command: npm publish --access public
 
   package-test-esm-js:
     docker:

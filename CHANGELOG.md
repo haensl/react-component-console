@@ -1,3 +1,6 @@
+## 2.0.1
+* Fix publishing configuration.
+
 ## 2.0.0
 * [#54: Move package.](https://github.com/haensl/react-component-console/issues/54)
 * Migrate Cursor component to React hooks.
