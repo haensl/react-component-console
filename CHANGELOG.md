@@ -1,3 +1,6 @@
+## 2.0.4
+* Fix NPM badge.
+
 ## 2.0.3
 * [#59: Update dependencies.](https://github.com/haensl/react-component-console/issues/59)
 

@@ -2,7 +2,7 @@
 
 A console emulator component for React.
 
-[![NPM](https://nodei.co/npm/@haensl/%2Freact-component-console.png?downloads=true)](https://nodei.co/npm/@haensl%2Freact-component-console/)
+[![NPM](https://nodei.co/npm/@haensl%2Freact-component-console.png?downloads=true)](https://nodei.co/npm/@haensl%2Freact-component-console/)
 
 [![npm version](https://badge.fury.io/js/@haensl%2Freact-component-console.svg)](http://badge.fury.io/js/@haensl%2Freact-component-console)
 

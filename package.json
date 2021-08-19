@@ -1,6 +1,6 @@
 {
   "name": "@haensl/react-component-console",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "description": "A console emulator component for React.",
   "main": "dist/react-component-console.cjs.js",
   "module": "dist/react-component-console.esm.js",
