@@ -1,11 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Cursor char renders as expected 1`] = `
-<span
-  className="Console-Cursor Console-Cursor--write"
+<Cursor
+  char="t"
 >
-  t
-</span>
+  <span
+    className="Console-Cursor Console-Cursor--write"
+  >
+    t
+  </span>
+</Cursor>
 `;
 
 exports[`Cursor classes renders as expected 1`] = `

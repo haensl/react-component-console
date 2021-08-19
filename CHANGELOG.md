@@ -1,3 +1,9 @@
+## 2.0.0
+* [#54: Move package.](https://github.com/haensl/react-component-console/issues/54)
+* Migrate Cursor component to React hooks.
+* Migrate Line component to React hooks.
+* Update dependencies.
+
 ## 1.3.3
 * [#49: Update dependencies.](https://github.com/haensl/react-component-console/issues/49)
 

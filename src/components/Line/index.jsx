@@ -1,26 +1,32 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PS1 from '../PS1';
 import Cursor from '../Cursor';
+import _defaults from './defaults';
 
-export const defaults = {
-  classes: {
-    element: 'Console-Line',
-    content: 'Console-Line-content'
-  }
-};
+export const defaults = _defaults;
 
-const Line = (props) => {
-  const classes = Object.assign({}, defaults.classes, props.classes);
+const Line = ({
+  classes = defaults.classes,
+  content,
+  cursor,
+  ps1,
+  write
+}) => {
+  const joinedClasses = useMemo(() => ({
+    ...defaults.classes,
+    ...classes
+  }), [classes]);
+
   return (
-    <pre className={ classes.element }>{
-      props.ps1 && (
-        <PS1 { ...props.ps1 } />
+    <pre className={ joinedClasses.element }>{
+      ps1 && (
+        <PS1 { ...ps1 } />
       )
-    }<span className={ classes.content }>{
-      props.content
+    }<span className={ joinedClasses.content }>{
+      content
     }</span>{
-      props.write && (
-        <Cursor { ...props.cursor } />
+      write && (
+        <Cursor { ...cursor } />
       )
     }</pre>
   );
