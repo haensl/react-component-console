@@ -1,3 +1,6 @@
+## 2.0.3
+* [#59: Update dependencies.](https://github.com/haensl/react-component-console/issues/59)
+
 ## 2.0.2
 * Fix package information job..
 
