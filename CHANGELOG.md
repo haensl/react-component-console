@@ -1,3 +1,6 @@
+## 2.0.6
+* [#63: Update dependencies.](https://github.com/haensl/react-component-console/issues/63)
+
 ## 2.0.5
 * [#61: Update dependencies.](https://github.com/haensl/react-component-console/issues/61)
 
