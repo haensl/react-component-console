@@ -15,7 +15,7 @@
     "tdd": "jest --runInBand --watch",
     "test": "jest --runInBand",
     "test:ci": "jest --runInBand --no-cache --ci --reporters='default' --reporters='jest-junit'",
-    "prepare": "husky install"
+    "prepare": "if [ ${NODE_ENV} != 'production' ]; then husky install; fi"
   },
   "husky": {
     "hooks": {
