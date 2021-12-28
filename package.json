@@ -1,6 +1,6 @@
 {
   "name": "@haensl/react-component-console",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "A console emulator component for React.",
   "main": "dist/react-component-console.cjs.js",
   "module": "dist/react-component-console.esm.js",
@@ -14,7 +14,8 @@
     "start": "styleguidist server",
     "tdd": "jest --runInBand --watch",
     "test": "jest --runInBand",
-    "test:ci": "jest --runInBand --no-cache --ci --reporters='default' --reporters='jest-junit'"
+    "test:ci": "jest --runInBand --no-cache --ci --reporters='default' --reporters='jest-junit'",
+    "prepare": "husky install"
   },
   "husky": {
     "hooks": {
@@ -108,7 +109,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "husky": "^4.3.8",
+    "husky": "^7.0.4",
     "jest": "^27.0.1",
     "jest-enzyme": "^7.1.2",
     "jest-junit": "^13.0.0",
