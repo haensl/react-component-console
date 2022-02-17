@@ -1,6 +1,6 @@
 {
   "name": "@haensl/react-component-console",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "A console emulator component for React.",
   "main": "dist/react-component-console.cjs.js",
   "module": "dist/react-component-console.esm.js",
@@ -64,6 +64,7 @@
     "twitter": "@h_p_d",
     "email": "h.p.dietz@gmail.com"
   },
+  "funding": "https://github.com/sponsors/haensl",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/haensl/react-component-console/issues"
