@@ -1,3 +1,6 @@
+## 2.0.12
+* [#79: Update dependencies.](https://github.com/haensl/react-component-console/issues/79)
+
 ## 2.0.11
 * [#77: Add funding information.](https://github.com/haensl/react-component-console/issues/77)
 * Update dependencies.
