@@ -1,3 +1,6 @@
+## 2.0.14
+* [#84: Update dependencies.](https://github.com/haensl/react-component-console/issues/84)
+
 ## 2.0.13
 * [#81: Update dependencies.](https://github.com/haensl/react-component-console/issues/81)
 
